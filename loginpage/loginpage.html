@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEPTUNES Login</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="loginpage.css" />
+    <!-- font google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alatsi&family=Archivo+Black&family=Bebas+Neue&family=Italianno&family=Jost:ital,wght@0,100..900;1,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- CDNJS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- icon -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Alert -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="login-container">
+        <div class="login-header">
+          <img
+            src="../img/Neptunes-Logo2.png"
+            style="margin: auto"
+            alt="Logo"
+            class="logo"
+          />
+          <h2>Masuk ke Akun Anda</h2>
+        </div>
+
+        <form class="login-form">
+          <div class="form-group">
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Nama Lengkap"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              id="nickName"
+              placeholder="Nama Panggilan"
+              required
+            />
+          </div>
+
+          <button type="submit">Masuk</button>
+        </form>
+
+        <div class="login-footer">
+          <div class="social-login">
+            <button class="social-btn google">
+              <i class="bx bxl-google"></i>
+              Lanjut dengan Google
+            </button>
+            <button class="social-btn facebook">
+              <i class="bx bxl-facebook"></i>
+              Lanjut dengan Facebook
+            </button>
+          </div>
+
+          <p class="mt-20">Belum punya akun? <a href="#">Daftar disini</a></p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .querySelector(".login-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const fullName = document.getElementById("fullName").value;
+          const nickName = document.getElementById("nickName").value;
+
+          if (fullName && nickName) {
+            // Simpan data dengan waktu kedaluwarsa 1 jam
+            const userData = {
+              fullName: fullName,
+              nickName: nickName,
+              expires: Date.now() + 3600000, // 1 jam
+            };
+
+            localStorage.setItem("currentUser", JSON.stringify(userData));
+
+            // Redirect ke halaman sebelumnya
+            const urlParams = new URLSearchParams(window.location.search);
+            const returnUrl = urlParams.get("return") || "../index.html";
+
+            // Gunakan SweetAlert2 untuk notifikasi berhasil login
+            Swal.fire({
+              title: "Berhasil!",
+              text: `Selamat datang, ${nickName}!`,
+              icon: "success",
+              confirmButtonText: "OK",
+              timer: 2000, // Otomatis hilang setelah 2 detik
+              timerProgressBar: true, // Tambahkan progress bar
+            }).then(() => {
+              // Redirect setelah notifikasi ditutup
+              window.location.href = returnUrl;
+            });
+          } else {
+            // Notifikasi jika input tidak lengkap
+            Swal.fire({
+              title: "Gagal!",
+              text: "Silakan isi semua kolom.",
+              icon: "error",
+              confirmButtonText: "Coba Lagi",
+            });
+          }
+        });
+    </script>
+
+    <!-- Alert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>

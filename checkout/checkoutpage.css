@@ -1,0 +1,269 @@
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff; /* Putih seperti di screenshot */
+  color: #1a202c; /* Warna teks gelap */
+}
+a {
+  text-decoration: none;
+  color: #2d3748;
+}
+
+/* ===== CONTAINER ===== */
+.checkout-container {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+/* ===== FORM SECTIONS ===== */
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+}
+.form-section {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f7fafc;
+}
+
+/* ===== INPUT & LABELS ===== */
+.input-group {
+  margin-bottom: 1.2rem;
+}
+input[type="text"],
+input[type="tel"],
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+}
+input:focus {
+  border-color: #48bb78;
+  outline: none;
+}
+.checkbox-group,
+.billing-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+.dual-input {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.triple-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+.country-display,
+.province-display {
+  background: #f8fafc;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+/* ===== PAYMENT & SHIPPING INFO ===== */
+.shipping-notice {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #4a5568;
+}
+.security-badge {
+  background: #48bb7810;
+  color: #2f855a;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+.payment-option {
+  display: flex;
+  gap: 12px;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+}
+.payment-option label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ===== ORDER SUMMARY (KANAN) ===== */
+.checkout-right {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+}
+
+/* Tambahkan di checkoutpage.css */
+.cart-item {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.item-divider {
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  margin: 15px 0;
+}
+
+.product-summary {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.checkout-right .product-summary {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.checkout-product-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+
+.product-details h3 {
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.product-details p {
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.price-breakdown .price-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.8rem 0;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.price-breakdown .total {
+  border-top: 2px solid #e2e8f0;
+  padding-top: 1rem;
+  font-weight: 600;
+}
+
+/* ===== BUTTON & FOOTER ===== */
+.checkout-btn {
+  background: #000; /* Tombol hitam */
+  color: #fff;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1.5rem;
+}
+.checkout-btn:hover {
+  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.policy-footer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+.policy-footer .divider {
+  color: #cbd5e0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .checkout-container {
+    grid-template-columns: 1fr;
+  }
+  .dual-input,
+  .triple-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .product-item img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.payment-details {
+  order: 0 !important; /* Pastikan urutan normal */
+  display: none; /* Awalnya disembunyikan */
+}
+
+.metode-container {
+  margin-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
+}
+
+.payment-option {
+  position: relative;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.payment-option input[type="radio"] {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.shipping-cost-row {
+  display: none !important;
+}
+
+.shipping-cost-row.visible {
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  display: flex !important;
+}

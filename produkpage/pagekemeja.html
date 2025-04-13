@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEPTUNES | Website Toko Baju Termurah & Terpercaya</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles3.css" />
+    <!-- font google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alatsi&family=Archivo+Black&family=Bebas+Neue&family=Italianno&family=Jost:ital,wght@0,100..900;1,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- CDNJS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- icon -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- Alert -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header start -->
+    <div class="promo-header">
+      "Experience Top-Quality Fashion at an Affordable Price with Neptunes"
+    </div>
+    <section class="header-sec">
+      <header>
+        <a href="#" class="logo"
+          ><img src="../img/Neptunes-Logo2.png" alt="Logo"
+        /></a>
+
+        <ul class="navmenu">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="pagesale.html">Sale</a></li>
+          <li><a href="pagerayaseries.html">Raya Series</a></li>
+          <li>
+            <a href="#update">Koleksi</a>
+            <ul class="submenu">
+              <li><a href="pagekaos.html">Kaos</a></li>
+              <li><a href="pagekemeja.html">Kemeja</a></li>
+              <li><a href="pagehoodie.html">Hoodie</a></li>
+              <li><a href="pagelimitededition.html">Limited Edition</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#about">INFORMASI</a>
+            <ul class="submenu">
+              <li><a href="../support/pageFAQs.html">Cara Order</a></li>
+              <li>
+                <a href="../support/pageReturn.html">Return & Pengembalian</a>
+              </li>
+              <li><a href="../support/pageAbout.html">Tentang Kami</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="nav-icon">
+          <a href="#" id="btn-search"><i class="bx bx-search"></i></a>
+          <div class="cart-icon-container">
+            <a href="../cart/cartpage.html" id="btn-cart" class="desktop-cart">
+              <i class="bx bxs-basket"></i>
+              <span class="cart-counter">0</span>
+            </a>
+          </div>
+          <!-- User Section Desktop -->
+          <div class="user-wrapper">
+            <a href="#" class="user-trigger">
+              <i class="bx bxs-user"></i>
+            </a>
+            <div class="login-dropdown">
+              <a href="../loginpage/loginpage.html" class="login-btn">Masuk</a>
+              <a href="#" class="register-btn">Daftar</a>
+            </div>
+          </div>
+
+          <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+
+        <div class="search-form">
+          <input type="search" id="search-box" placeholder="search her..." />
+          <label for="search-box"><i class="bx bx-search"></i></label>
+        </div>
+
+        <div class="shopping-cart">
+          <i class="remove-item bx bxs-trash"></i>
+        </div>
+      </header>
+    </section>
+    <!-- Header end -->
+
+    <!-- Konten Utama Start -->
+    <section class="main-content">
+      <!-- Sidebar Filter -->
+      <div class="sidebar-filter">
+        <!-- Filter Ketersediaan -->
+        <div class="filter-section">
+          <h3>Ketersediaan</h3>
+          <div class="filter-option">
+            <input type="checkbox" id="tersedia" />
+            <label for="tersedia">Tersedia</label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="habis" />
+            <label for="habis">Habis</label>
+          </div>
+        </div>
+
+        <!-- Filter Harga -->
+        <div class="filter-section">
+          <h3>Harga</h3>
+
+          <!-- Kategori Harga -->
+          <div class="price-category">
+            <div class="filter-option">
+              <input type="checkbox" id="low" class="price-cb" />
+              <label for="low">0 - 100rb</label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="mid" class="price-cb" />
+              <label for="mid">100rb - 200rb</label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="high" class="price-cb" />
+              <label for="high">> 200rb</label>
+            </div>
+          </div>
+
+          <!-- Input Manual -->
+          <div class="manual-input">
+            <input
+              type="number"
+              id="minPrice"
+              placeholder="Min"
+              min="0"
+              max="1000000"
+            />
+            <span>-</span>
+            <input
+              type="number"
+              id="maxPrice"
+              placeholder="Max"
+              min="0"
+              max="1000000"
+            />
+          </div>
+
+          <!-- Slider -->
+          <div class="price-range">
+            <input
+              type="range"
+              min="0"
+              max="1000000"
+              value="1000000"
+              class="price-slider"
+              id="hargaSlider"
+            />
+            <div class="price-labels">
+              <span>Rp 0</span>
+              <span>Rp 1.000.000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Sorting -->
+        <div class="filter-section">
+          <h3>Sortir</h3>
+          <div class="filter-option">
+            <input type="checkbox" id="terlaris" class="sort-checkbox" />
+            <label for="terlaris">Produk Terlaris</label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="harga-rendah" class="sort-checkbox" />
+            <label for="harga-rendah">Harga: Rendah ke Tinggi</label>
+          </div>
+          <div class="filter-option">
+            <input type="checkbox" id="harga-tinggi" class="sort-checkbox" />
+            <label for="harga-tinggi">Harga: Tinggi ke Rendah</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid Produk -->
+      <div class="product-grid">
+        <div class="products">
+          <!-- Product 1 -->
+          <div
+            class="product-card"
+            data-title="Jersey Celtics"
+            data-price="300000"
+            data-image="celtics1.jpg"
+            data-sizes='["S","M","L","XL","2XL","3XL"]'
+            data-description='Kaos jersey dengan desain "One Life". Limited edition'
+            data-status="available"
+          >
+            <img
+              src="../img/celtics1.jpg"
+              alt="Jersey Celtics"
+              class="product-image"
+              onclick="redirectToDetail(this.closest('.product-card'))"
+            />
+            <h3>Jersey Celtics</h3>
+            <div class="product-price">Rp 300.000</div>
+            <button
+              class="add-to-cart"
+              onclick="addToCart(this.closest('.product-card'))"
+            >
+              Add to Cart
+            </button>
+          </div>
+
+          <!-- Product 2 -->
+          <div
+            class="product-card"
+            data-title="Jersey Chicago"
+            data-price="300000"
+            data-image="chicago1.jpg"
+            data-sizes='["S","M","L","XL","2XL","3XL"]'
+            data-description='Kaos jersey dengan desain "One Life". Limited edition'
+            data-status="available"
+          >
+            <img
+              src="../img/chicago1.jpg"
+              alt="Jersey Chicago"
+              class="product-image"
+              onclick="redirectToDetail(this.closest('.product-card'))"
+            />
+            <h3>Jersey Chicago</h3>
+            <div class="product-price">Rp 300.000</div>
+            <button
+              class="add-to-cart"
+              onclick="addToCart(this.closest('.product-card'))"
+            >
+              Add to Cart
+            </button>
+          </div>
+
+          <!-- Product 3 -->
+          <div
+            class="product-card"
+            data-title="Jersey Lakers"
+            data-price="300000"
+            data-image="lakers1.jpg"
+            data-sizes='["S","M","L","XL","2XL","3XL"]'
+            data-description='Kaos jersey dengan desain "One Life". Limited edition'
+            data-status="available"
+          >
+            <img
+              src="../img/lakers1.jpg"
+              alt="Jersey Lakers"
+              class="product-image"
+              onclick="redirectToDetail(this.closest('.product-card'))"
+            />
+            <h3>Jersey Lakers</h3>
+            <div class="product-price">Rp 300.000</div>
+            <button
+              class="add-to-cart"
+              onclick="addToCart(this.closest('.product-card'))"
+            >
+              Add to Cart
+            </button>
+          </div>
+
+          <!-- Product 4 -->
+          <div
+            class="product-card"
+            data-title="Jersey Orlando 62"
+            data-price="300000"
+            data-image="orlando1.jpg"
+            data-sizes='["S","M","L","XL","2XL","3XL"]'
+            data-description='Kaos jersey dengan desain "One Life". Limited edition'
+            data-status="available"
+          >
+            <img
+              src="../img/orlando1.jpg"
+              alt="Jersey Orlando 62"
+              class="product-image"
+              onclick="redirectToDetail(this.closest('.product-card'))"
+            />
+            <h3>Jersey Orlando 62</h3>
+            <div class="product-price">Rp 300.000</div>
+            <button
+              class="add-to-cart"
+              onclick="addToCart(this.closest('.product-card'))"
+            >
+              Add to Cart
+            </button>
+          </div>
+
+          <!-- Product 5 -->
+          <div
+            class="product-card"
+            data-title="Jersey Orlando 62 + Tanda Tangan Ronaldo"
+            data-price="350000"
+            data-oldprice="599000"
+            data-image="orlando1.jpg"
+            data-sizes='["S","M","L","XL","2XL","3XL"]'
+            data-description='Kaos dengan desain "One Life" ini terbuat dari bahan katun yang lembut dan nyaman dipakai'
+            data-status="soldout"
+          >
+            <img
+              src="../img/orlando1.jpg"
+              alt="Jersey Orlando 62 + Tanda Tangan Ronaldo"
+              class="product-image"
+              onclick="handleSoldoutProduct(event, this)"
+            />
+            <h3>Jersey Orlando 62 + Tanda Tangan Ronaldo</h3>
+            <div class="product-price">
+              Rp 350.000 <span class="original-price">Rp 599.000</span>
+            </div>
+            <span class="sold-out">Habis</span>
+            <button
+              class="add-to-cart"
+              disabled
+              onclick="addToCart(this.closest('.product-card'))"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Konten Utama End -->
+
+    <br /><br /><br /><br /><br /><br /><br /><br />
+    <!-- footer start -->
+    <section class="contact" id="about">
+      <div class="contact-info">
+        <div class="first-info">
+          <h2>PELAYANAN ONLINE</h2>
+          <p>
+            Senin - Sabtu [ kecuali hari libur ] <br />
+            09.00 - 17.00
+          </p>
+          <h2>LAYANAN PELANGGAN</h2>
+          <p>WhatsApp : +62 821212121</p>
+        </div>
+
+        <div class="second-info">
+          <p><a href="#">How To Order</a></p>
+          <p><a href="#">All Collection</a></p>
+          <p><a href="#">Return & Refunds</a></p>
+          <p><a href="#">About US</a></p>
+        </div>
+
+        <div class="third-info">
+          <img src="../img/Neptunes-Logo2.png" alt="" />
+          <div class="social-icon">
+            <a href="#"><i class="bx bxl-facebook"></i></a>
+            <a href="#"><i class="bx bxl-instagram"></i></a>
+            <a href="#"><i class="bx bxl-shopify"></i></a>
+            <a href="#"><i class="bx bxl-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- footer end -->
+    <hr style="margin: 0 20px; color: #c2c2c2" />
+    <!-- Copyright -->
+    <section class="end-sec">
+      <div class="end-sec-info">
+        <div class="end-text">
+          <p>Neptunes &copy; 2025. All Right Reserved</p>
+        </div>
+
+        <div class="payment-icon">
+          <a href="#"><i class="bx bxl-paypal"></i></a>
+
+          <a href="#"><i class="bx bxl-visa"></i></a>
+
+          <a href="#"><i class="bx bxs-credit-card"></i></a>
+
+          <a href="#"><i class="bx bx-qr"></i></a>
+
+          <a href="#"><i class="bx bxs-bank"></i></a>
+        </div>
+      </div>
+    </section>
+    <br /><br />
+
+    <!-- Navbar bottom -->
+    <div class="bottom-navbar">
+      <a href="../cart/cartpage.html" class="mobile-cart">
+        <i class="bx bxs-basket"></i>
+      </a>
+      <a href="../loginpage/loginpage.html" class="mobile-user-icon"
+        ><i class="bx bxs-user"></i
+      ></a>
+    </div>
+    <!-- Navbar bottom end -->
+
+    <script src="script.js"></script>
+    <!-- Alert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>

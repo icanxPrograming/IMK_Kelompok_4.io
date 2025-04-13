@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEPTUNES | Checkout</title>
+    <link rel="stylesheet" href="../CSS%20(utama)/styles.css" />
+    <link rel="stylesheet" href="checkoutpage.css" />
+    <!-- Alert -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+  </head>
+  <body>
+    <div class="checkout-container">
+      <!-- Kiri: Form -->
+      <div class="checkout-form">
+        <!-- Kontak -->
+        <section class="form-section">
+          <h2>Kontak</h2>
+          <div class="input-group">
+            <input type="text" placeholder="Email atau nomor ponsel" />
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="newsletter" />
+            <label for="newsletter"
+              >Kirim saya email berita dan penawaran</label
+            >
+          </div>
+        </section>
+
+        <!-- Pengantaran -->
+        <section class="form-section">
+          <h2>Pengantaran</h2>
+          <div class="input-group">
+            <select class="full-width">
+              <option value="" disabled selected>Pilih Negara/Wilayah</option>
+              <option value="indonesia">Indonesia</option>
+              <option value="malaysia">Malaysia</option>
+            </select>
+          </div>
+          <div class="input-group dual-input">
+            <input type="text" placeholder="Nama depan" />
+            <input type="text" placeholder="Nama belakang" />
+          </div>
+          <div class="input-group">
+            <input type="text" placeholder="Alamat" />
+          </div>
+          <div class="input-group">
+            <input
+              type="text"
+              placeholder="Apartemen, suite, dsb. (opsional)"
+            />
+          </div>
+          <div class="input-group triple-grid">
+            <input type="text" placeholder="Kota" />
+            <select>
+              <option value="" disabled selected>Pilih Provinsi</option>
+              <option value="barat">Jawa Barat</option>
+              <option value="tengah">Jawa Tengah</option>
+              <option value="timur">Jawa Timur</option>
+            </select>
+            <input type="text" placeholder="Kode Pos" />
+          </div>
+          <div class="input-group">
+            <input type="tel" placeholder="Telepon" />
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="saveInfo" />
+            <label for="saveInfo"
+              >Simpan informasi ini untuk login berikutnya</label
+            >
+          </div>
+        </section>
+
+        <!-- Pembayaran -->
+        <section class="form-section payment-main">
+          <h2>Pembayaran</h2>
+          <div class="security-badge">
+            🔒 Semua transaksi sudah diamankan dan dienkripsi
+          </div>
+          <div class="payment-option">
+            <input type="radio" name="payment" id="bankTransfer" />
+            <label for="bankTransfer">
+              <span class="payment-title" style="font-weight: bold"
+                >Bank Transfer</span
+              >
+              <span class="payment-desc"
+                >Pembayaran lewat ATM/Internet Banking. Konfirmasi via
+                WhatsApp.</span
+              >
+            </label>
+          </div>
+          <div class="payment-option">
+            <input type="radio" name="payment" id="cashPayment" />
+            <label for="cashPayment">
+              <span class="payment-title" style="font-weight: bold">QRIS</span>
+              <span class="payment-desc"
+                >Pembayaran lewat QRIS. Konfirmasi via WhatsApp.</span
+              >
+            </label>
+          </div>
+        </section>
+
+        <!-- Metode Spesifik -->
+        <section class="form-section payment-details">
+          <h2>Detail Pembayaran</h2>
+          <p class="payment-notice">
+            Pilih metode pembayaran utama terlebih dahulu
+          </p>
+        </section>
+
+        <!-- Alamat Penagihan -->
+        <section class="form-section">
+          <h2>Dropshipper (Opsional)</h2>
+          <div class="billing-option">
+            <input type="radio" name="dropshipAddress" id="dropAddress" />
+            <label for="dropAddress">Kirim Sebagai Dropshipper</label>
+          </div>
+        </section>
+
+        <!-- Footer Kebijakan & Tombol -->
+        <div class="policy-footer">
+          <a href="#">Kebijakan Privasi</a>
+          <span class="divider">|</span>
+          <a href="#">Kebijakan Pembatalan</a>
+        </div>
+        <button class="checkout-btn">Selesaikan Pesanan</button>
+      </div>
+
+      <!-- Kanan: Ringkasan Pesanan -->
+      <div class="checkout-right">
+        <!-- Semuanya akan diisi otomatis oleh JavaScript -->
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- alert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>

@@ -1,0 +1,206 @@
+/* Base Styles */
+.payment-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.payment-header h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.timer {
+  text-align: center;
+}
+
+#countdown {
+  display: block;
+  font-size: 2rem;
+  color: #2d3748;
+  font-weight: bold;
+}
+
+.payment-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.order-summary,
+.payment-details {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.qr-section {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.qr-section img {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #e2e8f0;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.payment-proof {
+  grid-column: 1 / -1;
+  margin-top: 2rem;
+}
+
+#paymentForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.whatsapp-btn {
+  background: #25d366;
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.3s;
+}
+
+.whatsapp-btn:hover {
+  background: #128c7e;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .payment-content {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Data Pembeli */
+.buyer-info {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.buyer-info h3 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.buyer-info p {
+  margin: 0.5rem 0;
+  color: #4a5568;
+}
+
+/* Total Section */
+.total-section {
+  border-top: 2px solid #e2e8f0;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.grand-total {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-top: 1rem;
+}
+
+/* Tambahkan di CSS */
+.order-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 1rem;
+}
+
+.order-item img {
+  background: #f3f4f6;
+  position: relative;
+  overflow: hidden;
+}
+
+.qr-section img {
+  background: #f3f4f6;
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+}
+
+.qr-section p {
+  margin: 1rem;
+}
+
+.qr-section img::after,
+.order-item img::after {
+  content: "Memuat...";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-container {
+  border: 2px dashed #cbd5e0;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.upload-label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #718096;
+}
+
+.upload-label:hover {
+  color: #2d3748;
+}
+
+#preview-container {
+  margin-top: 1rem;
+}
+
+#preview-container img {
+  max-width: 200px;
+  border-radius: 8px;
+  margin-top: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

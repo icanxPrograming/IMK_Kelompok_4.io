@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEPTUNES | Pembayaran</title>
+    <link rel="stylesheet" href="../CSS%20(utama)/styles.css" />
+    <link rel="stylesheet" href="paymentpage.css" />
+    <!-- font google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alatsi&family=Archivo+Black&family=Bebas+Neue&family=Italianno&family=Jost:ital,wght@0,100..900;1,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- CDNJS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- icon -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+    <!-- Tailwind CSS -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+  </head>
+  <body>
+    <div class="payment-container">
+      <!-- Header -->
+      <div class="payment-header">
+        <h1>Pembayaran</h1>
+        <div class="timer">
+          <span id="countdown">10:00</span>
+          <span>Sisa Waktu Pembayaran</span>
+        </div>
+      </div>
+
+      <!-- Konten Utama -->
+      <div class="payment-content">
+        <!-- Ringkasan Pesanan -->
+        <section class="order-summary">
+          <h2>Ringkasan Pesanan</h2>
+
+          <div class="buyer-info">
+            <h3>Data Pembeli</h3>
+            <p>Nama: <span id="buyer-name"></span></p>
+            <p>Alamat: <span id="buyer-address"></span></p>
+            <p>Kota: <span id="buyer-city"></span></p>
+            <p>Provinsi: <span id="buyer-province"></span></p>
+            <p>Kode Pos: <span id="buyer-postalcode"></span></p>
+            <p>Telepon: <span id="buyer-phone"></span></p>
+          </div>
+
+          <div class="order-items" id="order-items"></div>
+
+          <div class="total-section">
+            <p>Subtotal: <span id="subtotal-amount"></span></p>
+            <p>Ongkir: <span id="shipping-fee"></span></p>
+            <p class="grand-total">
+              Total Pembayaran: <span id="total-amount"></span>
+            </p>
+          </div>
+        </section>
+
+        <!-- Detail Pembayaran -->
+        <section class="payment-details">
+          <h2>Instruksi Pembayaran</h2>
+          <div id="payment-instruction"></div>
+          <div class="qr-section" id="qr-section">
+            <img src="../img/qris-demo.jpg" alt="QR Code Pembayaran" />
+            <p>Scan QR Code di atas untuk melakukan pembayaran</p>
+          </div>
+        </section>
+
+        <!-- Upload Bukti Pembayaran -->
+        <section class="payment-proof">
+          <h2>Upload Bukti Pembayaran</h2>
+          <form id="paymentForm">
+            <div class="upload-container">
+              <input type="file" id="paymentProof" accept="image/*" hidden />
+              <label for="paymentProof" class="upload-label">
+                <i class="bx bx-cloud-upload"></i>
+                <span>Pilih File atau Tarik ke sini</span>
+              </label>
+              <div id="preview-container"></div>
+            </div>
+            <button type="button" class="whatsapp-btn" id="confirmBtn">
+              Konfirmasi via WhatsApp
+            </button>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>
