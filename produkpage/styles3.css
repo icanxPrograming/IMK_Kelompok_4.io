@@ -430,6 +430,10 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+.product-card h3 {
+  font-weight: 500;
+}
+
 .product-price {
   font-size: 1.1em;
   color: #333;
