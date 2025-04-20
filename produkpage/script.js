@@ -27,6 +27,20 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// ===== TOGGLE DROPDOWN FILTER =====
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("filterToggleBtn");
+  const sidebarFilter = document.querySelector(".sidebar-filter");
+  const filterArrow = document.getElementById("filterArrow");
+
+  toggleBtn.addEventListener("click", () => {
+    sidebarFilter.classList.toggle("active");
+    filterArrow.style.transform = sidebarFilter.classList.contains("active")
+      ? "rotate(180deg)"
+      : "rotate(0deg)";
+  });
+});
+
 // ---------------------------
 // 2. SISTEM FILTER & SORTING (VERSI FINAL)
 // ---------------------------

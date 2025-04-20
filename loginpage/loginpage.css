@@ -1,3 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-family: "Oswald", serif;
+  list-style: none;
+  text-decoration: none;
+}
+
 /* Login Page Styles */
 .login-page {
   padding: 100px 20px 50px;

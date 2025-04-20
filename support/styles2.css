@@ -245,6 +245,10 @@ section {
   transition: all 0.3s ease;
 }
 
+.login-dropdown a {
+  color: #000;
+}
+
 /* Hover State untuk Desktop */
 .user-wrapper:hover .login-dropdown {
   display: flex;
@@ -418,9 +422,10 @@ section {
   transition: all 0.42s;
 }
 
-.second-info p {
+.second-info p a {
   color: #707070;
   transition: 0.42s;
+  text-decoration: none;
 }
 
 .second-info p:hover {
@@ -565,6 +570,9 @@ section {
   .header-sec {
     padding: 3.8% 2%;
   }
+  .main-text {
+    padding: 0 15rem;
+  }
 }
 /* 1440PX */
 @media (max-width: 1440px) {
@@ -585,6 +593,9 @@ section {
     width: 100%;
     height: 100vh;
   }
+  .main-text {
+    padding: 0 10rem;
+  }
 }
 
 /* 1280PX */
@@ -604,10 +615,10 @@ section {
   }
   .main-home {
     width: 100%;
-    height: 100vh;
+    height: 100%;
   }
   .main-text {
-    padding: 2rem 10rem;
+    padding: 0 10rem;
   }
   section {
     padding: 7% 2%;
@@ -708,7 +719,42 @@ section {
     height: 100vh;
   }
   .main-text {
-    padding: 2rem 6rem;
+    padding: 2rem 5rem;
+  }
+  .main-text h4 {
+    font-size: 1.1rem;
+    font-weight: 300;
+  }
+  .main-text ul li {
+    list-style: disc;
+    list-style-position: inside;
+    font-weight: 300;
+    font-size: 1.1rem;
+  }
+  .main-text ul li span {
+    font-weight: 400;
+  }
+  .main-text ol li {
+    line-height: 1.5;
+    list-style: decimal;
+    list-style-position: inside;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+  }
+  .main-text ol li span {
+    font-weight: 400;
+  }
+  .main-text .p-about {
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+  .main-text p {
+    font-weight: 300;
+    font-size: 1.1rem;
+  }
+  .main-text p span {
+    font-weight: 400;
   }
 
   .navmenu a {
@@ -804,7 +850,7 @@ section {
     padding: 2rem 5rem;
   }
   .main-text h4 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 300;
   }
   .main-text ul li {
@@ -875,17 +921,17 @@ section {
     height: 100vh;
   }
   .main-text {
-    padding: 2rem 2rem;
+    padding: 0 2rem;
   }
   .main-text h4 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 300;
   }
   .main-text ul li {
     list-style: disc;
     list-style-position: inside;
     font-weight: 300;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
   }
   .main-text ul li span {
     font-weight: 400;
@@ -907,7 +953,7 @@ section {
   }
   .main-text p {
     font-weight: 300;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
   }
   .main-text p span {
     font-weight: 400;
@@ -972,6 +1018,10 @@ section {
     background: white;
     transition: all 0.3s ease;
   }
+
+  .promo-header {
+    font-size: 12px;
+  }
   /* header.sticky {
     background: #fff;
     padding: 30px 6%;
@@ -1022,10 +1072,7 @@ section {
     height: 100vh;
   }
   .main-text {
-    padding: 2rem 1rem;
-  }
-  .main-text h1 {
-    font-size: 30px;
+    padding: 0 2rem;
   }
   .main-text h4 {
     font-size: 1rem;
@@ -1035,7 +1082,7 @@ section {
     list-style: disc;
     list-style-position: inside;
     font-weight: 300;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .main-text ul li span {
     font-weight: 400;
@@ -1046,18 +1093,18 @@ section {
     list-style-position: inside;
     font-weight: 300;
     margin-bottom: 1.2rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   .main-text ol li span {
     font-weight: 400;
   }
   .main-text .p-about {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
   }
   .main-text p {
     font-weight: 300;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
   .main-text p span {
     font-weight: 400;
@@ -1178,7 +1225,7 @@ section {
     transition: all 0.3s ease;
   }
   .promo-header {
-    font-size: 10px;
+    font-size: 8px;
   }
   /* header.sticky {
     background: #fff;
@@ -1233,36 +1280,13 @@ section {
     padding-top: 3rem;
     padding-left: 1rem;
   }
-  .main-text2 {
-    font-size: 16px;
-    text-transform: capitalize;
-    font-weight: 500;
-    padding-left: 1rem;
-    padding-top: 8rem;
-  }
   .main-text h1 {
     font-size: 25px;
     transition: 0.4s;
   }
-  .main-text2 h1 {
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 1px solid #fff;
-    border-radius: 5px;
-    width: 45%;
-    font-size: 35px;
-    text-align: center;
-  }
   .main-text p {
     font-size: 13px;
     transition: 0.4s;
-  }
-  .main-text2 p {
-    font-size: 13px;
-    transition: 0.4s;
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 1px solid #fff;
-    border-radius: 5px;
-    width: 60%;
   }
   .main-btn {
     padding: 8px 17px;
@@ -1272,12 +1296,6 @@ section {
     width: 100%;
     height: 100vh;
     background-position: 8%;
-  }
-  .main-home2 {
-    margin-top: 2rem;
-    width: 100%;
-    height: 100vh;
-    background-position: 60%;
   }
   .shopping-cart {
     right: -200%;

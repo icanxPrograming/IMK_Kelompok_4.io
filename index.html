@@ -26,13 +26,256 @@
       rel="stylesheet"
       href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
     />
-    <!-- Tailwind CSS -->
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <!-- Alert -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
     />
+    <style>
+      /* Base Styles */
+      :root {
+        --primary: #2563eb;
+        --secondary: #1e40af;
+        --success: #059669;
+        --danger: #dc2626;
+        --text: #1e293b;
+        --background: #f8fafc;
+        --star: #f59e0b;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        line-height: 1.5;
+        background: var(--background);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      /* Review Section Header */
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-title {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 2.5rem;
+        color: var(--text);
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: var(--primary);
+        margin: 1rem auto 0;
+        border-radius: 2px;
+      }
+
+      /* Review Grid */
+      .review-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        margin-bottom: 4rem;
+      }
+
+      /* Review Card */
+      .review-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .review-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .review-user {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .user-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--primary);
+        padding: 2px;
+      }
+
+      .user-info {
+        flex: 1;
+      }
+
+      .user-name {
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 0.25rem;
+      }
+
+      .review-date {
+        font-size: 0.875rem;
+        color: #64748b;
+      }
+
+      .review-rating {
+        display: flex;
+        gap: 0.25rem;
+        margin-bottom: 1rem;
+      }
+
+      .rating-star {
+        color: var(--star);
+        font-size: 1.25rem;
+      }
+
+      .review-content {
+        color: var(--text);
+        line-height: 1.6;
+        position: relative;
+        padding-left: 1.5rem;
+      }
+
+      .review-content::before {
+        content: "“";
+        position: absolute;
+        left: 0;
+        top: -0.5rem;
+        font-size: 3rem;
+        color: var(--primary);
+        opacity: 0.3;
+        font-family: serif;
+      }
+
+      .review-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+      }
+
+      /* Review Form */
+      .review-form {
+        background: white;
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .form-input,
+      .form-textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        transition: var(--transition);
+        font-family: inherit;
+      }
+
+      .form-input:focus,
+      .form-textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .rating-container {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1rem 0;
+      }
+
+      .rating-star {
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .rating-star:hover {
+        transform: scale(1.2);
+      }
+
+      /* Buttons */
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+      }
+
+      .btn-danger {
+        background: var(--danger);
+        color: white;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+      }
+
+      /* Messages */
+      .alert {
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        display: none;
+      }
+
+      .alert-success {
+        background: #ecfdf5;
+        color: #059669;
+      }
+    </style>
   </head>
   <body>
     <div class="promo-header">
@@ -40,7 +283,7 @@
     </div>
     <section class="header-sec">
       <header>
-        <a href="#" class="logo"
+        <a href="index.html" class="logo"
           ><img src="img/Neptunes-Logo2.png" alt="Logo"
         /></a>
 
@@ -60,7 +303,7 @@
             </ul>
           </li>
           <li>
-            <a href="#about">INFORMASI</a>
+            <a href="#">INFORMASI</a>
             <ul class="submenu">
               <li><a href="support/pageFAQs.html">Cara Order</a></li>
               <li>
@@ -655,445 +898,60 @@
     <br /><br /><br /><br /><br />
 
     <!-- Client reviews section start -->
-    <section class="rvw-sec bg-white" id="review">
-      <div class="rvw mx-auto max-w-full px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <h2 class="text-center">What Tunes Says About</h2>
-        <br />
-        <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
-          <blockquote class="rounded-lg bg-gray-50 p-6 shadow-xs sm:p-8">
-            <div class="flex items-center gap-4">
-              <img
-                alt=""
-                src="https://i.pinimg.com/736x/89/37/12/893712575dc1cc31a3d0b976e2201604.jpg"
-                class="size-14 rounded-full object-cover"
-              />
-
-              <div>
-                <div class="flex justify-center gap-0.5 text-orange-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                </div>
-
-                <p class="mt-0.5 text-lg font-medium text-gray-900">
-                  Ujang Rahmat
-                </p>
-              </div>
-            </div>
-
-            <p class="p-review text-gray-700">Mantap Euy!</p>
-          </blockquote>
-
-          <blockquote class="rounded-lg bg-gray-50 p-6 shadow-xs sm:p-8">
-            <div class="flex items-center gap-4">
-              <img
-                alt=""
-                src="https://kapito.id/wp-content/uploads/2021/11/Malik-Zaman_Sans_Panduan-Ngobrol-bapak-web_compressed.jpg"
-                class="size-14 rounded-full object-cover"
-              />
-
-              <div>
-                <div class="flex justify-center gap-0.5 text-orange-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                </div>
-
-                <p class="mt-0.5 text-lg font-medium text-gray-900">
-                  Ujang Solih
-                </p>
-              </div>
-            </div>
-
-            <p class="p-review text-gray-700">Bahan Berkualitas! Jos Pisan🔥</p>
-          </blockquote>
-
-          <blockquote class="rounded-lg bg-gray-50 p-6 shadow-xs sm:p-8">
-            <div class="flex items-center gap-4">
-              <img
-                alt=""
-                src="https://i.pinimg.com/736x/24/3f/fa/243ffaa61ac551dd22e83fd607a96cb2.jpg"
-                class="size-14 rounded-full object-cover"
-              />
-
-              <div>
-                <div class="flex justify-center gap-0.5 text-orange-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                </div>
-
-                <p class="mt-0.5 text-lg font-medium text-gray-900">
-                  Mamat Sudirjo
-                </p>
-              </div>
-            </div>
-
-            <p class="p-review text-gray-700">
-              Emang paling rekomended belanja disini👌
-            </p>
-          </blockquote>
+    <div class="container">
+      <section class="review-section">
+        <div class="section-header">
+          <h2 class="section-title">Testimonial Pengguna</h2>
         </div>
-        <br />
-        <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
-          <blockquote class="rounded-lg bg-gray-50 p-6 shadow-xs sm:p-8">
-            <div class="flex items-center gap-4">
-              <img
-                alt=""
-                src="https://i1.sndcdn.com/artworks-Z6PQHY5GG48AUapX-K1mZjQ-t500x500.jpg"
-                class="size-14 rounded-full object-cover"
-              />
 
-              <div>
-                <div class="flex justify-center gap-0.5 text-orange-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                </div>
-
-                <p class="mt-0.5 text-lg font-medium text-gray-900">
-                  Ambangawi
-                </p>
-              </div>
-            </div>
-
-            <p class="p-review text-gray-700">Mantap, Jos Jos Mantap🔥</p>
-          </blockquote>
-
-          <blockquote class="rounded-lg bg-gray-50 p-6 shadow-xs sm:p-8">
-            <div class="flex items-center gap-4">
-              <img
-                alt=""
-                src="https://yt3.googleusercontent.com/5Wxax6s6sITa-lpEfwDmCM_3ScMXByuX5GlqbzMBlhAGgjjRLDppo8XGqsfQrP2qw0RhvySDOw=s900-c-k-c0x00ffffff-no-rj"
-                class="size-14 rounded-full object-cover"
-              />
-
-              <div>
-                <div class="flex justify-center gap-0.5 text-orange-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                </div>
-
-                <p class="mt-0.5 text-lg font-medium text-gray-900">
-                  Rusdi Imoet
-                </p>
-              </div>
-            </div>
-
-            <p class="p-review text-gray-700">The best pisan mang👍</p>
-          </blockquote>
-
-          <blockquote class="rounded-lg bg-gray-50 p-6 shadow-xs sm:p-8">
-            <div class="flex items-center gap-4">
-              <img
-                alt=""
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxmzCekZfOPKFr_TrJGs9fXR5ZiRAJvhZSLg&s"
-                class="size-14 rounded-full object-cover"
-              />
-
-              <div>
-                <div class="flex justify-center gap-0.5 text-orange-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    />
-                  </svg>
-                </div>
-
-                <p class="mt-0.5 text-lg font-medium text-gray-900">
-                  Kevin Ironi
-                </p>
-              </div>
-            </div>
-
-            <p class="p-review text-gray-700">
-              Bahan Bukan Kaleng Kaleng Ini mah🤞
-            </p>
-          </blockquote>
+        <div class="review-grid" id="reviewContainer">
+          <!-- Reviews will be loaded here -->
         </div>
-      </div>
-    </section>
+
+        <form class="review-form" id="reviewForm">
+          <h3
+            class="section-title"
+            style="font-size: 1.75rem; margin-bottom: 1.5rem"
+          >
+            Tulis Testimonial
+          </h3>
+
+          <div class="form-group">
+            <label class="form-label" for="name">Nama Lengkap</label>
+            <input type="text" class="form-input" id="name" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="review">Testimonial Anda</label>
+            <textarea
+              class="form-textarea"
+              id="review"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Rating</label>
+            <div class="rating-container" id="ratingContainer">
+              <span class="rating-star" data-value="1">☆</span>
+              <span class="rating-star" data-value="2">☆</span>
+              <span class="rating-star" data-value="3">☆</span>
+              <span class="rating-star" data-value="4">☆</span>
+              <span class="rating-star" data-value="5">☆</span>
+            </div>
+            <input type="hidden" id="rating" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            Kirim Testimonial
+          </button>
+          <div class="alert alert-success" id="alertSuccess">
+            Testimonial berhasil dikirim!
+          </div>
+        </form>
+      </section>
+    </div>
     <!-- Client reviews section end-->
 
     <br /><br /><br /><br /><br /><br />
@@ -1162,6 +1020,143 @@
       ></a>
     </div>
     <!-- Navbar bottom end -->
+
+    <script>
+      // Review System
+      const reviewSystem = {
+        storageKey: "userReviews",
+
+        init() {
+          this.loadReviews();
+          this.setupEventListeners();
+        },
+
+        getReviews() {
+          return JSON.parse(localStorage.getItem(this.storageKey)) || [];
+        },
+
+        saveReview(review) {
+          const reviews = this.getReviews();
+          reviews.push(review);
+          localStorage.setItem(this.storageKey, JSON.stringify(reviews));
+        },
+
+        deleteReview(reviewId) {
+          const reviews = this.getReviews().filter((r) => r.id !== reviewId);
+          localStorage.setItem(this.storageKey, JSON.stringify(reviews));
+          this.renderReviews();
+        },
+
+        loadReviews() {
+          this.renderReviews();
+        },
+
+        renderReviews() {
+          const container = document.getElementById("reviewContainer");
+          const reviews = this.getReviews();
+
+          container.innerHTML = reviews
+            .map(
+              (review) => `
+                    <div class="review-card">
+                        <div class="review-user">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${
+                              review.id
+                            }" 
+                                 class="user-avatar" 
+                                 alt="${review.name}">
+                            <div class="user-info">
+                                <h4 class="user-name">${review.name}</h4>
+                                <div class="review-date">${new Date(
+                                  review.date
+                                ).toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            ${"★".repeat(review.rating)}${"☆".repeat(
+                5 - review.rating
+              )}
+                        </div>
+                        <p class="review-content">${review.text}</p>
+                        <div class="review-actions">
+                            <button class="btn btn-danger" onclick="reviewSystem.deleteReview('${
+                              review.id
+                            }')">
+                                Hapus
+                            </button>
+                        </div>
+                    </div>
+                `
+            )
+            .join("");
+        },
+
+        setupEventListeners() {
+          // Rating Stars
+          document.querySelectorAll(".rating-star").forEach((star) => {
+            star.addEventListener("click", () => {
+              const value = parseInt(star.dataset.value);
+              this.setRating(value);
+            });
+          });
+
+          // Form Submission
+          document
+            .getElementById("reviewForm")
+            .addEventListener("submit", (e) => {
+              e.preventDefault();
+              this.submitReview();
+            });
+        },
+
+        setRating(rating) {
+          document.querySelectorAll(".rating-star").forEach((star, index) => {
+            star.textContent = index < rating ? "★" : "☆";
+          });
+          document.getElementById("rating").value = rating;
+        },
+
+        submitReview() {
+          const name = document.getElementById("name").value.trim();
+          const text = document.getElementById("review").value.trim();
+          const rating = parseInt(document.getElementById("rating").value);
+
+          if (!name || !text || !rating) {
+            alert("Harap lengkapi semua field!");
+            return;
+          }
+
+          const newReview = {
+            id: Date.now().toString(),
+            name,
+            text,
+            rating,
+            date: new Date().toISOString(),
+          };
+
+          this.saveReview(newReview);
+          this.renderReviews();
+          this.showSuccessMessage();
+          this.resetForm();
+        },
+
+        showSuccessMessage() {
+          const alert = document.getElementById("alertSuccess");
+          alert.style.display = "block";
+          setTimeout(() => {
+            alert.style.display = "none";
+          }, 3000);
+        },
+
+        resetForm() {
+          document.getElementById("reviewForm").reset();
+          this.setRating(0);
+        },
+      };
+
+      // Initialize
+      reviewSystem.init();
+    </script>
 
     <script src="js/script.js"></script>
     <!-- Alert JS -->
