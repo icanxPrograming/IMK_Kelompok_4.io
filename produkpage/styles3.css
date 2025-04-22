@@ -617,14 +617,14 @@ input[type="checkbox"] {
   gap: 10px;
 }
 
-.payment-icon a i {
+.payment-icon img {
   color: #565656;
   margin-right: 10px;
-  font-size: 30px;
+  width: 60px;
   transition: all 0.42s;
 }
 
-.payment-icon i:hover {
+.payment-icon img:hover {
   transform: scale(1.3);
 }
 

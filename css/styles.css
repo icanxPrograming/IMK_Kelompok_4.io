@@ -666,14 +666,14 @@ section {
   gap: 10px;
 }
 
-.payment-icon a i {
+.payment-icon img {
   color: #565656;
   margin-right: 10px;
-  font-size: 30px;
+  width: 60px;
   transition: all 0.42s;
 }
 
-.payment-icon i:hover {
+.payment-icon img:hover {
   transform: scale(1.3);
 }
 
@@ -756,7 +756,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 5%;
+    padding: 18px 5%;
     background: white;
     transition: all 0.3s ease;
   }
@@ -803,7 +803,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 5%;
+    padding: 18px 5%;
     background: white;
     transition: all 0.3s ease;
   }
@@ -848,7 +848,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 5%;
+    padding: 18px 5%;
     background: white;
     transition: all 0.3s ease;
   }
@@ -902,7 +902,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 5%;
+    padding: 17px 5%;
     background: white;
     transition: all 0.3s ease;
   }

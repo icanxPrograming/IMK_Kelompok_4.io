@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
       detailsSection: document.querySelector(".payment-details"),
       methods: {
         bank: ["Mandiri", "BRI", "BCA", "BNI"],
-        qris: ["Dana", "Gopay", "OVO", "ShopeePay"],
+        qris: ["Dana", "Gopay", "OVO", "Shopee"],
       },
     },
     summary: {
@@ -204,6 +204,13 @@ document.addEventListener("DOMContentLoaded", () => {
         ? elements.payment.methods.bank
         : elements.payment.methods.qris;
 
+    // Fungsi baru untuk handle nama file tanpa prefix
+    const getImagePath = (method) => {
+      // Contoh: "BRI" -> "BRI.png", "Dana" -> "DANA.png" (sesuaikan dengan nama file)
+      const fileName = method.toUpperCase() + ".webp";
+      return `../img/${fileName}`; // Sesuaikan path!
+    };
+
     elements.payment.detailsSection.innerHTML = `
       <h2>Pilih ${type === "bankTransfer" ? "Bank" : "E-Wallet"}</h2>
       <div class="payment-methods">
@@ -216,6 +223,12 @@ document.addEventListener("DOMContentLoaded", () => {
                       <span class="payment-title">${method}</span>
                       <span class="payment-desc">Transfer sampai 3 bank berbeda</span>
                   </label>
+                  <img 
+                    src="${getImagePath(method)}" 
+                    alt="${method}" 
+                    class="payment-logo"
+                    onerror="this.style.display='none'"
+                  >
               </div>
           `
             )

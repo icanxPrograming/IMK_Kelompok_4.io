@@ -13,14 +13,6 @@
       href="https://fonts.googleapis.com/css2?family=Alatsi&family=Archivo+Black&family=Bebas+Neue&family=Italianno&family=Jost:ital,wght@0,100..900;1,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    <!-- CDNJS -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
     <!-- icon -->
     <link
       rel="stylesheet"
@@ -90,9 +82,21 @@
       /* Review Grid */
       .review-grid {
         display: grid;
-        gap: 2rem;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        margin-bottom: 4rem;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+      .review-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Tombol Lihat Semua */
+      .text-center {
+        text-align: center;
+        margin-top: 2rem;
       }
 
       /* Review Card */
@@ -908,48 +912,12 @@
           <!-- Reviews will be loaded here -->
         </div>
 
-        <form class="review-form" id="reviewForm">
-          <h3
-            class="section-title"
-            style="font-size: 1.75rem; margin-bottom: 1.5rem"
-          >
-            Tulis Testimonial
-          </h3>
-
-          <div class="form-group">
-            <label class="form-label" for="name">Nama Lengkap</label>
-            <input type="text" class="form-input" id="name" required />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="review">Testimonial Anda</label>
-            <textarea
-              class="form-textarea"
-              id="review"
-              rows="4"
-              required
-            ></textarea>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Rating</label>
-            <div class="rating-container" id="ratingContainer">
-              <span class="rating-star" data-value="1">☆</span>
-              <span class="rating-star" data-value="2">☆</span>
-              <span class="rating-star" data-value="3">☆</span>
-              <span class="rating-star" data-value="4">☆</span>
-              <span class="rating-star" data-value="5">☆</span>
-            </div>
-            <input type="hidden" id="rating" required />
-          </div>
-
-          <button type="submit" class="btn btn-primary">
-            Kirim Testimonial
-          </button>
-          <div class="alert alert-success" id="alertSuccess">
-            Testimonial berhasil dikirim!
-          </div>
-        </form>
+        <!-- Tambahkan class ke tombol -->
+        <div class="text-center" id="showMoreContainer">
+          <a href="review/reviewpage.html" class="btn btn-primary">
+            Lihat Semua Ulasan <i class="bx bx-chevron-right"></i>
+          </a>
+        </div>
       </section>
     </div>
     <!-- Client reviews section end-->
@@ -996,15 +964,14 @@
         </div>
 
         <div class="payment-icon">
-          <a href="#"><i class="bx bxl-paypal"></i></a>
-
-          <a href="#"><i class="bx bxl-visa"></i></a>
-
-          <a href="#"><i class="bx bxs-credit-card"></i></a>
-
-          <a href="#"><i class="bx bx-qr"></i></a>
-
-          <a href="#"><i class="bx bxs-bank"></i></a>
+          <img src="img/BRI.webp" alt="BRI" />
+          <img src="img/MANDIRI.webp" alt="MANDIRI" />
+          <img src="img/BNI.webp" alt="BNI" />
+          <img src="img/BCA.webp" alt="BCA" />
+          <img src="img/SHOPEE.webp" alt="SHOPEEPAY" />
+          <img src="img/GOPAY.webp" alt="GOPAY" />
+          <img src="img/OVO.webp" alt="OVO" />
+          <img src="img/DANA.webp" alt="DANA" />
         </div>
       </div>
     </section>
@@ -1022,140 +989,76 @@
     <!-- Navbar bottom end -->
 
     <script>
-      // Review System
-      const reviewSystem = {
-        storageKey: "userReviews",
+      // INLINE JS
+      document.addEventListener("DOMContentLoaded", () => {
+        // Load reviews
+        const reviews = JSON.parse(localStorage.getItem("userReviews")) || [];
+        const topReviews = reviews
+          .filter((review) => review.rating === 5)
+          .slice(0, 3);
 
-        init() {
-          this.loadReviews();
-          this.setupEventListeners();
-        },
+        document.getElementById("reviewContainer").innerHTML = topReviews
+          .map(
+            (review) => `
+          <div class="review-card">
+            <div style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem">
+              <div>
+                <h4 style="margin:0">${review.name}</h4>
+                <div style="color:#f59e0b">${"★".repeat(review.rating)}</div>
+              </div>
+            </div>
+            <p>"${review.text}"</p>
+          </div>
+        `
+          )
+          .join("");
 
-        getReviews() {
-          return JSON.parse(localStorage.getItem(this.storageKey)) || [];
-        },
-
-        saveReview(review) {
-          const reviews = this.getReviews();
-          reviews.push(review);
-          localStorage.setItem(this.storageKey, JSON.stringify(reviews));
-        },
-
-        deleteReview(reviewId) {
-          const reviews = this.getReviews().filter((r) => r.id !== reviewId);
-          localStorage.setItem(this.storageKey, JSON.stringify(reviews));
-          this.renderReviews();
-        },
-
-        loadReviews() {
-          this.renderReviews();
-        },
-
-        renderReviews() {
-          const container = document.getElementById("reviewContainer");
-          const reviews = this.getReviews();
-
-          container.innerHTML = reviews
-            .map(
-              (review) => `
-                    <div class="review-card">
-                        <div class="review-user">
-                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=${
-                              review.id
-                            }" 
-                                 class="user-avatar" 
-                                 alt="${review.name}">
-                            <div class="user-info">
-                                <h4 class="user-name">${review.name}</h4>
-                                <div class="review-date">${new Date(
-                                  review.date
-                                ).toLocaleDateString()}</div>
-                            </div>
-                        </div>
-                        <div class="review-rating">
-                            ${"★".repeat(review.rating)}${"☆".repeat(
-                5 - review.rating
-              )}
-                        </div>
-                        <p class="review-content">${review.text}</p>
-                        <div class="review-actions">
-                            <button class="btn btn-danger" onclick="reviewSystem.deleteReview('${
-                              review.id
-                            }')">
-                                Hapus
-                            </button>
-                        </div>
-                    </div>
-                `
-            )
-            .join("");
-        },
-
-        setupEventListeners() {
-          // Rating Stars
-          document.querySelectorAll(".rating-star").forEach((star) => {
-            star.addEventListener("click", () => {
-              const value = parseInt(star.dataset.value);
-              this.setRating(value);
-            });
+        // Notifikasi jika redirect dari review page
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("review_submitted") === "true") {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Review terkirim!",
+            showConfirmButton: false,
+            timer: 1500,
           });
+          window.history.replaceState({}, "", window.location.pathname);
+        }
+      });
+    </script>
 
-          // Form Submission
-          document
-            .getElementById("reviewForm")
-            .addEventListener("submit", (e) => {
-              e.preventDefault();
-              this.submitReview();
-            });
-        },
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js"></script>
 
-        setRating(rating) {
-          document.querySelectorAll(".rating-star").forEach((star, index) => {
-            star.textContent = index < rating ? "★" : "☆";
-          });
-          document.getElementById("rating").value = rating;
-        },
-
-        submitReview() {
-          const name = document.getElementById("name").value.trim();
-          const text = document.getElementById("review").value.trim();
-          const rating = parseInt(document.getElementById("rating").value);
-
-          if (!name || !text || !rating) {
-            alert("Harap lengkapi semua field!");
-            return;
-          }
-
-          const newReview = {
-            id: Date.now().toString(),
-            name,
-            text,
-            rating,
-            date: new Date().toISOString(),
-          };
-
-          this.saveReview(newReview);
-          this.renderReviews();
-          this.showSuccessMessage();
-          this.resetForm();
-        },
-
-        showSuccessMessage() {
-          const alert = document.getElementById("alertSuccess");
-          alert.style.display = "block";
-          setTimeout(() => {
-            alert.style.display = "none";
-          }, 3000);
-        },
-
-        resetForm() {
-          document.getElementById("reviewForm").reset();
-          this.setRating(0);
-        },
+    <!-- FIREBASE -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+      // Konfigurasi Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyA_rMayX5qfysHqNLyuHu4t-T1z847iTls",
+        authDomain: "neptunes-login.firebaseapp.com",
+        projectId: "neptunes-login",
+        storageBucket: "neptunes-login.firebasestorage.app",
+        messagingSenderId: "234729892005",
+        appId: "1:234729892005:web:f7aaaf0deeb1a4ddfa854c",
       };
 
-      // Initialize
-      reviewSystem.init();
+      // Inisialisasi Firebase App
+      const app = initializeApp(firebaseConfig);
+      // Initialize Firebase Auth and Firestore
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Ekspos objek ke global scope jika diperlukan
+      window.auth = auth;
+      window.db = db;
     </script>
 
     <script src="js/script.js"></script>

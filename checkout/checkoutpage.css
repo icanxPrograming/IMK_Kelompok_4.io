@@ -257,6 +257,13 @@ input:focus {
   transform: translateY(-50%);
 }
 
+.payment-logo {
+  width: 80px;
+  height: 50px;
+  object-fit: contain;
+  margin-left: 200px; /* Jarak antara teks dan logo */
+}
+
 .shipping-cost-row {
   display: none !important;
 }
