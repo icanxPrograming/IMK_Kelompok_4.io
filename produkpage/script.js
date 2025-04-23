@@ -449,7 +449,7 @@ function redirectToDetailPage(productCard) {
     title: encodeURIComponent(productCard.dataset.title),
     price: productCard.dataset.price,
     oldprice: productCard.dataset.oldprice || "",
-    image: productCard.dataset.image,
+    images: productCard.dataset.images, // Kirim daftar gambar
     sizes: encodeURIComponent(productCard.dataset.sizes),
     desc: encodeURIComponent(productCard.dataset.description),
     status: productCard.dataset.status,

@@ -673,6 +673,28 @@ section {
     transition: all 0.42s ease;
     text-decoration: none;
   }
+
+  .end-sec-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .payment-icon {
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+  }
+
+  .end-text {
+    padding: 10px;
+  }
+
+  .end-sec {
+    margin: 5rem 1rem;
+  }
 }
 
 /* 890PX */
@@ -1136,12 +1158,26 @@ section {
     left: 45%;
   }
 
-  .payment-icon {
-    padding: 20px;
+  .end-sec-info {
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .payment-icon {
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+  }
+
+  .end-text {
+    padding: 10px;
+  }
+
+  .end-sec {
+    margin: 5rem 1rem;
   }
 
   #btn-cart,
@@ -1365,12 +1401,26 @@ section {
     border-radius: 5px;
   }
 
-  .payment-icon {
-    padding: 10px;
+  .end-sec-info {
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .payment-icon {
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+  }
+
+  .end-text {
+    padding: 10px;
+  }
+
+  .end-sec {
+    margin: 5rem 1rem;
   }
 
   #btn-cart,

@@ -1,3 +1,5 @@
+// import "boxicons/css/boxicons.min.css";
+
 // Mengatur toggle menu pada ikon hamburger
 const header = document.querySelector("header");
 

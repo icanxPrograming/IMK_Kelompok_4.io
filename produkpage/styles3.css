@@ -405,6 +405,7 @@ input[type="checkbox"] {
 /* ===== PRODUCT GRID ===== */
 .product-grid {
   flex: 1;
+  gap: 20px; /* Jarak antar kartu produk */
 }
 
 .products {
@@ -420,6 +421,9 @@ input[type="checkbox"] {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
   transition: opacity 0.3s ease, transform 0.3s ease, order 0.3s ease;
   position: relative;
+  flex-direction: column; /* Susun elemen secara vertikal */
+  justify-content: space-between; /* Jaga jarak antar elemen */
+  height: 100%; /* Pastikan tinggi kartu tetap seragam */
 }
 
 .product-card:hover {
@@ -436,6 +440,11 @@ input[type="checkbox"] {
 
 .product-card h3 {
   font-weight: 500;
+  font-size: 1.1rem; /* Batasi ukuran font agar tidak terlalu besar */
+  margin: 10px 0;
+  overflow: hidden; /* Sembunyikan teks yang melebihi satu baris */
+  text-overflow: ellipsis; /* Tambahkan elipsis (...) jika teks terpotong */
+  white-space: nowrap; /* Cegah teks pindah ke baris baru */
 }
 
 .product-price {
@@ -973,6 +982,28 @@ input[type="checkbox"] {
     grid-template-columns: repeat(auto-fit, minmax(235px, auto));
     gap: 3rem;
   }
+
+  .end-sec-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .payment-icon {
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+  }
+
+  .end-text {
+    padding: 10px;
+  }
+
+  .end-sec {
+    margin: 5rem 1rem;
+  }
 }
 
 /* 890PX */
@@ -1262,12 +1293,26 @@ input[type="checkbox"] {
     width: 15rem;
   }
 
-  .payment-icon {
-    padding: 20px;
+  .end-sec-info {
     display: flex;
-    justify-content: flex-start;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .payment-icon {
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+  }
+
+  .end-text {
+    padding: 10px;
+  }
+
+  .end-sec {
+    margin: 5rem 1rem;
   }
 
   #btn-cart,
@@ -1390,14 +1435,6 @@ input[type="checkbox"] {
   }
   .shopping-cart {
     width: 15rem;
-  }
-
-  .payment-icon {
-    padding: 10px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
   }
 
   #btn-cart,

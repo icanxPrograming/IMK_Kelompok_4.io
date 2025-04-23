@@ -13,18 +13,10 @@
       href="https://fonts.googleapis.com/css2?family=Alatsi&family=Archivo+Black&family=Bebas+Neue&family=Italianno&family=Jost:ital,wght@0,100..900;1,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap"
       rel="stylesheet"
     />
-    <!-- CDNJS -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
     <!-- icon -->
     <link
+      href="../node_modules/boxicons/css/boxicons.min.css"
       rel="stylesheet"
-      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
     />
     <!-- Alert -->
     <link
@@ -109,9 +101,7 @@
       <div class="product-detail-container">
         <!-- Bagian Gambar Produk -->
         <div class="product-images">
-          <div class="main-image">
-            <img id="mainProductImage" class="main-image" alt="Product Image" />
-          </div>
+          <div class="image-grid" id="imageGrid"></div>
         </div>
 
         <!-- Bagian Informasi Produk -->
@@ -140,9 +130,9 @@
           </div>
 
           <!-- Tambahkan elemen ini di detailpage.html -->
-          <div class="soldout-badge" id="soldoutBadge">
+          <!-- <div class="soldout-badge" id="soldoutBadge">
             <span>🛑 PRODUK HABIS</span>
-          </div>
+          </div> -->
 
           <div class="action-buttons">
             <button
@@ -157,15 +147,15 @@
 
           <div class="product-description">
             <h3>DESKRIPSI PRODUK</h3>
-            <p id="productDescription"></p>
+            <p id="productDescription" style="font-weight: 300"></p>
             <div class="product-notes" id="productNotes">
               <ul>
-                <li>Note:</li>
-                <li>
+                <li><h3>CATATAN</h3></li>
+                <li style="font-weight: 300">
                   - Harap ukur sesuai detail size (sizechart) yang sudah
                   disediakan sebelum melakukan pemesanan.
                 </li>
-                <li>
+                <li style="font-weight: 300">
                   - Tidak berlaku tukar size jika sudah sesuai dengan pilihan
                   awal.
                 </li>

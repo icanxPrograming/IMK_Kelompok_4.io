@@ -31,9 +31,9 @@ document.querySelector("#btn-search").onclick = (e) => {
 // Konten detail produk
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
-  const requiredParams = ["title", "price", "image"];
 
   // Validasi parameter wajib
+  const requiredParams = ["title", "price", "images"];
   if (!requiredParams.every((p) => params.has(p))) {
     alert("Produk tidak valid! Redirect ke halaman utama...");
     window.location.href = "../index.html";
@@ -45,7 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
     title: decodeURIComponent(params.get("title")),
     price: parseInt(params.get("price")),
     oldPrice: params.has("oldprice") ? parseInt(params.get("oldprice")) : null,
-    image: `../img/${params.get("image")}`,
+    images: params
+      .get("images")
+      .split(",")
+      .map((img) => `../img/${img}`),
     sizes: JSON.parse(
       decodeURIComponent(
         params.get("sizes") || '["S","M","L","XL","2XL","3XL"]'
@@ -59,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Update UI
   document.getElementById("productTitle").textContent = product.title;
+
   const priceContainer = document.getElementById("productPrice");
   priceContainer.innerHTML = product.oldPrice
     ? `<span class="current-price">${formatCurrency(
@@ -115,13 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Update gambar
-  const mainImage = document.getElementById("mainProductImage");
-  mainImage.src = product.image;
-  mainImage.onerror = () => {
-    mainImage.src = "../img/default-product.png";
-    mainImage.alt = "Gambar tidak tersedia";
-  };
+  // Setup gambar produk
+  setupProductImages(product);
 
   // Update deskripsi
   document.getElementById("productDescription").textContent =
@@ -136,6 +135,52 @@ document.addEventListener("DOMContentLoaded", () => {
     qtyInput.value = parseInt(qtyInput.value) + 1 || 1;
   });
 });
+
+function setupProductImages(product) {
+  const imageGrid = document.getElementById("imageGrid");
+
+  // Fallback jika tidak ada gambar
+  if (!product.images || product.images.length === 0) {
+    const fallbackImage = document.createElement("img");
+    fallbackImage.src = "../img/default-product.png";
+    fallbackImage.alt = "Gambar tidak tersedia";
+    imageGrid.appendChild(fallbackImage);
+    return;
+  }
+
+  // Tampilkan semua gambar dalam grid
+  product.images.slice(0, 4).forEach((imgSrc, index) => {
+    const imgElement = document.createElement("img");
+    imgElement.src = imgSrc;
+    imgElement.alt = `Gambar ${index + 1}`;
+    imgElement.onclick = () => {
+      openImageZoom(imgSrc); // Fitur zoom ketika gambar diklik
+    };
+    imageGrid.appendChild(imgElement);
+  });
+}
+
+// Fungsi untuk membuka modal zoom gambar
+function openImageZoom(imageUrl) {
+  const zoomModal = document.createElement("div");
+  zoomModal.classList.add("zoom-modal");
+  zoomModal.innerHTML = `
+    <div class="modal-overlay" onclick="closeZoom()"></div>
+    <div class="modal-content">
+      <img src="${imageUrl}" alt="Zoom Image" />
+      <button class="close-btn" onclick="closeZoom()">X</button>
+    </div>
+  `;
+  document.body.appendChild(zoomModal);
+}
+
+// Fungsi untuk menutup modal zoom
+function closeZoom() {
+  const zoomModal = document.querySelector(".zoom-modal");
+  if (zoomModal) {
+    zoomModal.remove();
+  }
+}
 
 // Fungsi format mata uang
 function formatCurrency(amount) {
