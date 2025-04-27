@@ -17,17 +17,17 @@ const banners = [
     description:
       "Sambut Ramadan dengan baju muslim <br />baru untuk menunjang ibadah kamu <br />dibulan suci penuh ampunan",
     button: "Shop Now",
-    backgroundImage: "../img/middle.webp",
+    backgroundImage: "img/middle.webp",
     showText: true,
-    link: "../produkpage/pagesale.html",
+    link: "produkpage/pagesale.html",
   },
   {
     title: "",
     description: "",
     button: "",
-    backgroundImage: "../img/blockcore.webp",
+    backgroundImage: "img/blockcore.webp",
     showText: false,
-    link: "../produkpage/pagelimitededition.html",
+    link: "produkpage/pagelimitededition.html",
   },
 ];
 

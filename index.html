@@ -4,6 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NEPTUNES | Website Toko Baju Termurah & Terpercaya</title>
+    <base href="/" id="base-url" />
+    <script>
+      // Atur base URL otomatis
+      const isLocalFile = window.location.protocol === "file:";
+      const isGithubPages = window.location.hostname.includes("github.io");
+
+      if (isLocalFile) {
+        // Untuk browser default (file://)
+        document.getElementById("base-url").href =
+          window.location.pathname.replace("index.html", "");
+      } else if (isGithubPages) {
+        // Untuk GitHub Pages
+        document.getElementById("base-url").href = "/IMK_Kelompok_4.io/"; // Ganti dengan nama repo
+      }
+      // Live Server akan tetap pakai root (/)
+    </script>
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css" />
     <!-- font google -->
