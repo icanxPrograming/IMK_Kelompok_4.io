@@ -1465,6 +1465,10 @@ section {
   .nav-icon .user-wrapper {
     display: none;
   }
+
+  .quantity-control {
+    width: 28%;
+  }
 }
 
 /* 480PX */
@@ -1619,6 +1623,10 @@ section {
   .nav-icon .user-wrapper {
     display: none;
   }
+
+  .quantity-control {
+    width: 50%;
+  }
 }
 
 @media (max-width: 350px) {
@@ -1756,5 +1764,9 @@ section {
 
   .nav-icon .user-wrapper {
     display: none;
+  }
+
+  .quantity-control {
+    width: 60%;
   }
 }

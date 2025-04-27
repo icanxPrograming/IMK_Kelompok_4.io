@@ -10,6 +10,82 @@ menu.onclick = () => {
   navmenu.classList.toggle("open"); // PENJELASAN: Membuka atau menutup menu navigasi saat ikon menu diklik
 };
 
+// Daftar banner dengan teks, deskripsi, dan link
+const banners = [
+  {
+    title: "Ramadan <br />Collection",
+    description:
+      "Sambut Ramadan dengan baju muslim <br />baru untuk menunjang ibadah kamu <br />dibulan suci penuh ampunan",
+    button: "Shop Now",
+    backgroundImage: "../img/middle.webp",
+    showText: true,
+    link: "../produkpage/pagesale.html",
+  },
+  {
+    title: "",
+    description: "",
+    button: "",
+    backgroundImage: "../img/blockcore.webp",
+    showText: false,
+    link: "../produkpage/pagelimitededition.html",
+  },
+];
+
+let currentIndex = 0;
+let displayedIndex = 0; // Tambahkan variabel untuk melacak banner yang sedang ditampilkan
+
+function updateBanner() {
+  const banner = banners[currentIndex];
+  const mainHome2 = document.querySelector(".main-home2");
+  const bannerTitle = document.getElementById("bannerTitle");
+  const bannerDescription = document.getElementById("bannerDescription");
+  const bannerButton = document.getElementById("bannerButton");
+
+  // Fade out content
+  document.querySelector(".main-text2").style.opacity = 0;
+
+  // Update background and content after fade out
+  setTimeout(() => {
+    // Update background image
+    mainHome2.style.backgroundImage = `url(${banner.backgroundImage})`;
+
+    // Update teks dan tombol berdasarkan showText
+    if (banner.showText) {
+      bannerTitle.innerHTML = banner.title;
+      bannerDescription.innerHTML = banner.description;
+      bannerButton.textContent = banner.button;
+
+      bannerTitle.style.display = "block";
+      bannerDescription.style.display = "block";
+      bannerButton.style.display = "inline-block";
+    } else {
+      bannerTitle.style.display = "none";
+      bannerDescription.style.display = "none";
+      bannerButton.style.display = "none";
+    }
+
+    // Fade in content
+    document.querySelector(".main-text2").style.opacity = 1;
+
+    // Update displayedIndex sebelum currentIndex diubah
+    displayedIndex = currentIndex;
+
+    // Pindah ke banner berikutnya
+    currentIndex = (currentIndex + 1) % banners.length;
+  }, 500);
+}
+
+setInterval(updateBanner, 5000);
+updateBanner();
+
+// Menambahkan event listener untuk membuat banner clickable
+document.querySelector(".main-home2").addEventListener("click", () => {
+  const clickedBanner = banners[displayedIndex]; // Gunakan displayedIndex bukan currentIndex
+  if (clickedBanner.link) {
+    window.location.href = clickedBanner.link;
+  }
+});
+
 // Menangani klik di luar elemen menu atau search form
 const hamMenu = document.querySelector("#menu-icon");
 const searchBtn = document.querySelector("#btn-search");

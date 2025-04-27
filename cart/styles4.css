@@ -507,7 +507,7 @@ section {
 }
 
 .contact-info p {
-  color: #565656;
+  color: #000;
   font-size: 15px;
   font-weight: 400;
   /* width: 60%; */
@@ -518,7 +518,7 @@ section {
 }
 
 .second-info p a {
-  color: #707070;
+  color: #000;
   transition: 0.42s;
 }
 

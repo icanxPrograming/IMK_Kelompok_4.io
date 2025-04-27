@@ -308,7 +308,7 @@
             <ul class="submenu">
               <li><a href="support/pageFAQs.html">Cara Order</a></li>
               <li>
-                <a href="support/pageReturn.html">Return & Pengembalian</a>
+                <a href="support/pageReturn.html">Return & Refund</a>
               </li>
               <li><a href="support/pageAbout.html">Tentang Kami</a></li>
             </ul>
@@ -622,27 +622,18 @@
     <!-- trending-ramadan-product-section end -->
 
     <!-- Middle Home start -->
-    <section class="main-home2">
-      <div class="main-text2">
-        <h1>
-          Ramadan <br />
-          Collection
-        </h1>
-        <p>
-          Sambut Ramadan dengan baju muslim <br />baru untuk menunjang ibadah
-          kamu <br />dibulan suci penuh ampunan
+    <section class="main-home2" id="home2">
+      <div class="main-text2" id="dynamicContent">
+        <h1 id="bannerTitle">Ramadan <br />Collection</h1>
+        <p id="bannerDescription">
+          Sambut Ramadan dengan baju muslim <br />
+          baru untuk menunjang ibadah kamu <br />
+          dibulan suci penuh ampunan
         </p>
-
-        <a href="#" class="main-btn"
+        <a href="#" class="main-btn" id="bannerButton"
           >Shop Now <i class="bx bx-right-arrow-alt"></i
         ></a>
       </div>
-
-      <!-- <div class="down-arrow">
-        <a href="#trending" class="down"
-          ><i class="bx bx-down-arrow-alt"></i
-        ></a>
-      </div> -->
     </section>
     <!-- Middle Home end -->
 
@@ -934,10 +925,12 @@
         </div>
 
         <div class="second-info">
-          <p><a href="#">How To Order</a></p>
-          <p><a href="#">All Collection</a></p>
-          <p><a href="#">Return & Refunds</a></p>
-          <p><a href="#">About US</a></p>
+          <p><a href="support/pageFAQs.html">Cara Order</a></p>
+          <p><a href="produkpage/pagekaos.html">Semua Koleksi</a></p>
+          <p>
+            <a href="support/pageReturn.html">Pengembalian Barang dan Dana</a>
+          </p>
+          <p><a href="support/pageAbout.html">Tentang Kami</a></p>
         </div>
 
         <div class="third-info">
@@ -1058,7 +1051,7 @@
       window.db = db;
     </script>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=1.0.1"></script>
     <!-- Alert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
