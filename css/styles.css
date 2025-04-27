@@ -572,6 +572,7 @@ section {
 .original-price {
   text-decoration: line-through;
   font-weight: lighter;
+  color: #95a5a6;
 }
 
 /* review */

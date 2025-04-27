@@ -138,17 +138,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function setupProductImages(product) {
   const imageGrid = document.getElementById("imageGrid");
+  const prevButton = document.getElementById("prevBtn");
+  const nextButton = document.getElementById("nextBtn");
+
+  // Bersihkan konten sebelumnya
+  if (imageGrid) imageGrid.innerHTML = "";
 
   // Fallback jika tidak ada gambar
   if (!product.images || product.images.length === 0) {
     const fallbackImage = document.createElement("img");
     fallbackImage.src = "../img/default-product.png";
     fallbackImage.alt = "Gambar tidak tersedia";
-    imageGrid.appendChild(fallbackImage);
+    if (imageGrid) imageGrid.appendChild(fallbackImage);
     return;
   }
 
-  // Tampilkan semua gambar dalam grid
+  // Tambahkan semua gambar ke DOM
   product.images.slice(0, 4).forEach((imgSrc, index) => {
     const imgElement = document.createElement("img");
     imgElement.src = imgSrc;
@@ -156,8 +161,42 @@ function setupProductImages(product) {
     imgElement.onclick = () => {
       openImageZoom(imgSrc); // Fitur zoom ketika gambar diklik
     };
-    imageGrid.appendChild(imgElement);
+    if (imageGrid) imageGrid.appendChild(imgElement);
   });
+
+  // Logika navigasi gambar untuk layar kecil
+  if (window.matchMedia("(max-width: 890px)").matches) {
+    const images = Array.from(imageGrid.children);
+    let currentIndex = 0;
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.style.display = i === index ? "block" : "none";
+      });
+    }
+
+    // Tampilkan gambar pertama
+    showImage(currentIndex);
+
+    // Event listener untuk tombol sebelumnya
+    if (prevButton)
+      prevButton.addEventListener("click", () => {
+        currentIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1; // Kembali ke akhir jika di awal
+        showImage(currentIndex);
+      });
+
+    // Event listener untuk tombol berikutnya
+    if (nextButton)
+      nextButton.addEventListener("click", () => {
+        currentIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0; // Kembali ke awal jika di akhir
+        showImage(currentIndex);
+      });
+  } else {
+    // Pastikan semua gambar ditampilkan pada layar besar
+    Array.from(imageGrid.children).forEach((img) => {
+      img.style.display = "block";
+    });
+  }
 }
 
 // Fungsi untuk membuka modal zoom gambar
@@ -339,35 +378,45 @@ function updateCartCounter() {
 document.addEventListener("DOMContentLoaded", updateCartCounter);
 
 // sinkronisasi ke detailproduk
-// Fungsi penanganan klik gambar produk
+// Menangani klik pada gambar produk
 function handleProductClick(event) {
   const productCard = event.target.closest(".row");
   const isSoldout = productCard.dataset.status === "soldout";
 
-  // Jika produk soldout, tampilkan konfirmasi
   if (isSoldout) {
-    event.preventDefault();
-    const userConfirmation = confirm(
-      "Produk sudah habis, apakah tetap ingin melihat detail produk?"
-    );
+    event.preventDefault(); // Jika produk habis, tampilkan konfirmasi terlebih dahulu
 
-    if (!userConfirmation) {
-      event.stopImmediatePropagation();
-      return false;
-    }
+    Swal.fire({
+      title: "Produk Habis",
+      text: "Produk sudah habis, apakah tetap ingin melihat detail produk?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        redirectToDetailPage(productCard);
+      }
+    });
+  } else {
+    redirectToDetailPage(productCard);
   }
+}
 
-  // Lanjutkan proses untuk semua produk (termasuk soldout jika dikonfirmasi)
+// Fungsi untuk redirect ke halaman detail produk
+function redirectToDetailPage(productCard) {
+  // Ambil data dari dataset
   const params = new URLSearchParams({
     title: encodeURIComponent(productCard.dataset.title),
     price: productCard.dataset.price,
     oldprice: productCard.dataset.oldprice || "",
-    image: productCard.dataset.image,
+    images: productCard.dataset.images,
     sizes: encodeURIComponent(productCard.dataset.sizes),
     desc: encodeURIComponent(productCard.dataset.description),
     status: productCard.dataset.status,
   });
 
+  // Redirect ke halaman detail produk
   window.location.href = `detailpage.html?${params}`;
 }
 
