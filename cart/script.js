@@ -43,9 +43,9 @@ function updateCart(cart) {
 
 function updateCartCounter() {
   const cart = getCart();
-  const counters = document.querySelectorAll(".cart-counter");
-  counters.forEach((counter) => {
-    counter.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+  document.querySelectorAll(".cart-counter").forEach((counter) => {
+    counter.textContent = totalItems;
   });
 }
 
@@ -180,99 +180,107 @@ document.getElementById("buyBtn").addEventListener("click", () => {
 });
 
 // ======= Sistem Autentikasi Pengguna (Login / Logout) =======
+// Pencegahan default saat klik profil user (mode desktop)
+document.querySelectorAll(".user-trigger").forEach((trigger) => {
+  trigger.addEventListener("click", (e) => {
+    if (window.innerWidth > 630) {
+      e.preventDefault();
+    }
+  });
+});
+
+// Objek untuk mengelola sesi pengguna
 const Auth = {
   checkSession: () => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (user && Date.now() > user.expires) {
+    if (user && Date.now() > user.expiresAt) {
       localStorage.removeItem("currentUser");
       return false;
     }
     return !!user;
   },
 
-  updateUI: () => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    const cartButton = document.querySelector("#btn-cart");
+  updateUI: async () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const cartButton = document.getElementById("btn-cart");
     const cartCounter = document.querySelector(".cart-counter");
 
+    // Desktop UI
     const desktopTrigger = document.querySelector(".user-trigger");
     const desktopDropdown = document.querySelector(".login-dropdown");
     if (desktopTrigger && desktopDropdown) {
-      if (user) {
-        desktopTrigger.innerHTML = user.nickName;
+      if (currentUser) {
+        const nickName = currentUser.nickName || "User";
+        desktopTrigger.textContent = nickName;
         desktopDropdown.innerHTML = `
-          <span class="logged-as">Hai, ${user.nickName}</span>
+          <span class="logged-as">Hai, ${nickName}</span>
           <a href="#" class="logout-btn">Logout</a>
         `;
-        cartCounter.style.display = "block";
-        cartButton.disabled = false;
+        if (cartCounter) {
+          cartCounter.style.display = "block";
+        }
+        if (cartButton) cartButton.disabled = false;
       } else {
         desktopTrigger.innerHTML = '<i class="bx bxs-user"></i>';
         desktopDropdown.innerHTML = `
-          <a href="../loginpage/loginpage.html?return=${encodeURIComponent(
-            window.location.href
-          )}" class="login-btn">Masuk</a>
-          <a href="#" class="register-btn">Daftar</a>
+          <a href="../loginpage/loginpage.html" class="login-btn">Masuk</a>
+          <a href="../registerpage/registerpage.html" class="register-btn">Daftar</a>
         `;
-        cartCounter.style.display = "none";
-        cartButton.disabled = true;
+        if (cartCounter) {
+          cartCounter.style.display = "none";
+          cartCounter.textContent = "";
+        }
+        if (cartButton) cartButton.disabled = true;
       }
     }
 
-    const mobileUser = document.querySelector(".mobile-user-icon");
-    if (mobileUser) {
-      if (user) {
-        mobileUser.innerHTML = user.nickName;
-        mobileUser.classList.add("logged-in");
-        mobileUser.href = "javascript:void(0)";
+    // Mobile UI
+    const mobileUserIcon = document.querySelector(".mobile-user-icon");
+    if (mobileUserIcon) {
+      if (currentUser) {
+        const nickName = currentUser.nickName || "User";
+        mobileUserIcon.textContent = nickName;
+        mobileUserIcon.classList.add("logged-in");
+        mobileUserIcon.href = "#";
 
-        mobileUser.addEventListener("click", (e) => {
+        mobileUserIcon.addEventListener("click", (e) => {
           e.preventDefault();
-          Swal.fire({
-            title: "Konfirmasi Logout",
-            text: "Apakah Anda yakin ingin keluar?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Ya, Logout",
-            cancelButtonText: "Batal",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Auth.logout();
-            }
-          });
+          showLogoutConfirmation();
         });
       } else {
-        mobileUser.innerHTML = '<i class="bx bxs-user"></i>';
-        mobileUser.classList.remove("logged-in");
-        mobileUser.href = `../loginpage/loginpage.html?return=${encodeURIComponent(
-          window.location.href
-        )}`;
+        mobileUserIcon.innerHTML = '<i class="bx bxs-user"></i>';
+        mobileUserIcon.classList.remove("logged-in");
+        mobileUserIcon.href = "../loginpage/loginpage.html";
       }
     }
+
+    // Perbarui jumlah item di keranjang
+    updateCartCounter(currentUser?.email);
   },
 
   logout: () => {
     localStorage.removeItem("currentUser");
-    Auth.updateUI();
     Swal.fire({
       icon: "success",
-      title: "Logout Berhasil",
-      text: "Anda telah berhasil logout.",
+      title: "Logout berhasil",
+      showConfirmButton: false,
+      timer: 1500,
     }).then(() => {
       window.location.reload();
     });
   },
 };
 
+// Melindungi akses ke halaman keranjang
 const protectCartPage = () => {
-  if (window.location.pathname.includes("/cart/")) {
-    if (!Auth.checkSession()) {
-      const returnUrl = encodeURIComponent(window.location.href);
-      window.location.href = `../loginpage/loginpage.html?return=${returnUrl}`;
-    }
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser && window.location.pathname.includes("/cart/")) {
+    const returnUrl = encodeURIComponent(window.location.href);
+    window.location.href = `../loginpage/loginpage.html?return=${returnUrl}`;
   }
 };
 
+// Penanganan klik pada tombol keranjang
 const handleCartClick = (e) => {
   e.preventDefault();
   e.stopImmediatePropagation();
@@ -281,13 +289,14 @@ const handleCartClick = (e) => {
     window.location.href = e.currentTarget.getAttribute("href");
   } else {
     const returnUrl = encodeURIComponent(window.location.href);
+
     Swal.fire({
-      title: "Akses Terbatas",
-      text: "Silakan login terlebih dahulu untuk mengakses keranjang.",
-      icon: "warning",
+      title: "Login Diperlukan",
+      text: "Silakan login untuk mengakses keranjang belanja.",
+      icon: "info",
       showCancelButton: true,
-      confirmButtonText: "Login Sekarang",
-      cancelButtonText: "Nanti Saja",
+      confirmButtonText: "Login",
+      cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
         window.location.href = `../loginpage/loginpage.html?return=${returnUrl}`;
@@ -296,41 +305,49 @@ const handleCartClick = (e) => {
   }
 };
 
-// ======= Event Listener & Proteksi Halaman =======
-document.addEventListener("DOMContentLoaded", () => {
-  Auth.updateUI();
+// Inisialisasi ketika DOM selesai dimuat
+document.addEventListener("DOMContentLoaded", async () => {
+  await Auth.updateUI(); // PENJELASAN: Perbarui tampilan berdasarkan status login
+  updateCartCounter();
 
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("logout-btn")) {
       e.preventDefault();
-      Auth.logout();
+      showLogoutConfirmation();
     }
 
     if (e.target.classList.contains("mobile-user-icon.logged-in")) {
       e.preventDefault();
-      Swal.fire({
-        title: "Konfirmasi Logout",
-        text: "Apakah Anda yakin ingin keluar?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ya, Logout",
-        cancelButtonText: "Batal",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Auth.logout();
-        }
-      });
+      showLogoutConfirmation();
     }
   });
 
-  protectCartPage();
+  protectCartPage(); // PENJELASAN: Cek sesi saat load halaman
 
   document.querySelectorAll("#btn-cart, .mobile-cart").forEach((cart) => {
     cart.addEventListener("click", handleCartClick);
   });
 });
 
-// ======= Cek Session Secara Berkala =======
+// Pemeriksaan sesi pengguna setiap 60 detik
 setInterval(() => {
   protectCartPage();
 }, 60000);
+
+// Fungsi konfirmasi logout
+function showLogoutConfirmation() {
+  Swal.fire({
+    title: "Logout",
+    text: "Anda yakin ingin keluar?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Ya, Logout",
+    cancelButtonText: "Batal",
+    reverseButtons: true,
+    confirmButtonColor: "#dc3545",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Auth.logout();
+    }
+  });
+}

@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEPTUNES Login</title>
+    <title>NEPTUNES Register</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="loginpage.css" />
+    <link rel="stylesheet" href="registerpage.css" />
     <!-- font google -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,42 +22,71 @@
     />
   </head>
   <body>
-    <div class="login-page">
-      <div class="login-container">
-        <div class="login-header">
+    <div class="register-page">
+      <div class="register-container">
+        <div class="register-header">
           <img
             src="../img/Neptunes-Logo2.png"
             style="margin: auto"
             alt="Logo"
             class="logo"
           />
-          <h2>Masuk ke Akun Anda</h2>
+          <h2>Buat Akun Baru</h2>
         </div>
 
-        <form class="login-form" id="login-form">
+        <form class="register-form" id="register-form">
           <div class="form-group">
-            <input type="email" id="login-email" placeholder="Email" required />
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Nama Lengkap"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              id="nickName"
+              placeholder="Nama Panggilan"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="email"
+              id="register-email"
+              placeholder="Email"
+              required
+            />
           </div>
 
           <div class="form-group">
             <input
               type="password"
-              id="login-password"
+              id="register-password"
               placeholder="Password"
               required
             />
           </div>
 
-          <button type="submit">Masuk</button>
+          <div class="form-group">
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Konfirmasi Password"
+              required
+            />
+          </div>
+
+          <button type="submit">Daftar</button>
         </form>
 
-        <div class="login-footer">
-          <p class="mt-20">
-            Belum punya akun?
-            <a href="../registerpage/registerpage.html">Daftar disini</a>
-          </p>
+        <div class="register-footer">
           <p>
-            <a href="#" id="forgot-password-link">Lupa Password?</a>
+            Sudah punya akun?
+            <a href="../loginpage/loginpage.html">Masuk disini</a>
           </p>
         </div>
       </div>
@@ -66,6 +95,6 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <script src="login.js"></script>
+    <script src="register.js"></script>
   </body>
 </html>

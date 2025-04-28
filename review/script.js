@@ -49,84 +49,103 @@ document.querySelectorAll(".user-trigger").forEach((trigger) => {
 });
 
 // Objek untuk mengelola sesi pengguna
+// Pencegahan default saat klik profil user (mode desktop)
+document.querySelectorAll(".user-trigger").forEach((trigger) => {
+  trigger.addEventListener("click", (e) => {
+    if (window.innerWidth > 630) {
+      e.preventDefault();
+    }
+  });
+});
+
+// Objek untuk mengelola sesi pengguna
 const Auth = {
   checkSession: () => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (user && Date.now() > user.expires) {
-      localStorage.removeItem("currentUser"); // PENJELASAN: Hapus data user jika sesi sudah kedaluwarsa
+    if (user && Date.now() > user.expiresAt) {
+      localStorage.removeItem("currentUser");
       return false;
     }
-    return !!user; // PENJELASAN: Mengembalikan true jika user valid
+    return !!user;
   },
 
-  updateUI: () => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    const cartButton = document.querySelector("#btn-cart");
+  updateUI: async () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const cartButton = document.getElementById("btn-cart");
     const cartCounter = document.querySelector(".cart-counter");
+
+    // Desktop UI
     const desktopTrigger = document.querySelector(".user-trigger");
     const desktopDropdown = document.querySelector(".login-dropdown");
-
     if (desktopTrigger && desktopDropdown) {
-      if (user) {
-        // PENJELASAN: Jika user login, tampilkan nama dan opsi logout
-        desktopTrigger.innerHTML = user.nickName;
+      if (currentUser) {
+        const nickName = currentUser.nickName || "User";
+        desktopTrigger.textContent = nickName;
         desktopDropdown.innerHTML = `
-          <span class="logged-as">Hai, ${user.nickName}</span>
+          <span class="logged-as">Hai, ${nickName}</span>
           <a href="#" class="logout-btn">Logout</a>
         `;
-        cartCounter.style.display = "block";
-        cartButton.disabled = false;
+        if (cartCounter) {
+          cartCounter.style.display = "block";
+        }
+        if (cartButton) cartButton.disabled = false;
       } else {
-        // PENJELASAN: Jika belum login, tampilkan opsi masuk/daftar
         desktopTrigger.innerHTML = '<i class="bx bxs-user"></i>';
         desktopDropdown.innerHTML = `
           <a href="../loginpage/loginpage.html" class="login-btn">Masuk</a>
-          <a href="#" class="register-btn">Daftar</a>
+          <a href="../registerpage/registerpage.html" class="register-btn">Daftar</a>
         `;
-        cartCounter.style.display = "none";
-        cartButton.disabled = true;
+        if (cartCounter) {
+          cartCounter.style.display = "none";
+          cartCounter.textContent = "";
+        }
+        if (cartButton) cartButton.disabled = true;
       }
     }
 
-    const mobileUser = document.querySelector(".mobile-user-icon");
-    if (mobileUser) {
-      if (user) {
-        mobileUser.innerHTML = user.nickName;
-        mobileUser.classList.add("logged-in");
-        mobileUser.href = "javascript:void(0)";
-        mobileUser.addEventListener("click", (e) => {
+    // Mobile UI
+    const mobileUserIcon = document.querySelector(".mobile-user-icon");
+    if (mobileUserIcon) {
+      if (currentUser) {
+        const nickName = currentUser.nickName || "User";
+        mobileUserIcon.textContent = nickName;
+        mobileUserIcon.classList.add("logged-in");
+        mobileUserIcon.href = "#";
+
+        mobileUserIcon.addEventListener("click", (e) => {
           e.preventDefault();
-          showLogoutConfirmation(); // PENJELASAN: Tampilkan konfirmasi logout di mobile
+          showLogoutConfirmation();
         });
       } else {
-        mobileUser.innerHTML = '<i class="bx bxs-user"></i>';
-        mobileUser.classList.remove("logged-in");
-        mobileUser.href = "../loginpage/loginpage.html";
+        mobileUserIcon.innerHTML = '<i class="bx bxs-user"></i>';
+        mobileUserIcon.classList.remove("logged-in");
+        mobileUserIcon.href = "../loginpage/loginpage.html";
       }
     }
+
+    // Perbarui jumlah item di keranjang
+    updateCartCounter(currentUser?.email);
   },
 
   logout: () => {
     localStorage.removeItem("currentUser");
-    Auth.updateUI();
     Swal.fire({
       icon: "success",
       title: "Logout berhasil",
       showConfirmButton: false,
       timer: 1500,
     }).then(() => {
-      window.location.reload(); // PENJELASAN: Refresh halaman setelah logout
+      window.location.reload();
     });
   },
 };
 
 // Melindungi akses ke halaman keranjang
 const protectCartPage = () => {
-  if (window.location.pathname.includes("/cart/")) {
-    if (!Auth.checkSession()) {
-      const returnUrl = encodeURIComponent(window.location.href);
-      window.location.href = `../loginpage/loginpage.html?return=${returnUrl}`; // PENJELASAN: Redirect jika belum login
-    }
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser && window.location.pathname.includes("/cart/")) {
+    const returnUrl = encodeURIComponent(window.location.href);
+    window.location.href = `../loginpage/loginpage.html?return=${returnUrl}`;
   }
 };
 
@@ -142,7 +161,7 @@ const handleCartClick = (e) => {
 
     Swal.fire({
       title: "Login Diperlukan",
-      text: "Silakan login untuk mengakses keranjang belanja",
+      text: "Silakan login untuk mengakses keranjang belanja.",
       icon: "info",
       showCancelButton: true,
       confirmButtonText: "Login",
@@ -156,8 +175,9 @@ const handleCartClick = (e) => {
 };
 
 // Inisialisasi ketika DOM selesai dimuat
-document.addEventListener("DOMContentLoaded", () => {
-  Auth.updateUI(); // PENJELASAN: Perbarui tampilan berdasarkan status login
+document.addEventListener("DOMContentLoaded", async () => {
+  await Auth.updateUI(); // PENJELASAN: Perbarui tampilan berdasarkan status login
+  updateCartCounter();
 
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("logout-btn")) {
@@ -209,8 +229,6 @@ function updateCartCounter() {
     counter.textContent = totalItems;
   });
 }
-
-document.addEventListener("DOMContentLoaded", updateCartCounter);
 
 // ===== VARIABEL UTAMA =====
 let selectedRating = 0;

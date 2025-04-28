@@ -367,16 +367,6 @@ function showCartNotification(productName) {
   }, 2000);
 }
 
-// Update counter keranjang
-function updateCartCounter() {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-  document.querySelectorAll(".cart-counter").forEach((counter) => {
-    counter.textContent = totalItems;
-  });
-}
-document.addEventListener("DOMContentLoaded", updateCartCounter);
-
 // sinkronisasi ke detailproduk
 // Menangani klik pada gambar produk
 function handleProductClick(event) {
@@ -442,74 +432,80 @@ document.querySelectorAll(".user-trigger").forEach((trigger) => {
 // ** 5. SISTEM OTENTIKASI (LOGIN & LOGOUT) **
 // ---------------------------
 
+// Objek untuk mengelola sesi pengguna
 const Auth = {
   checkSession: () => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
-    if (user && Date.now() > user.expires) {
+    if (user && Date.now() > user.expiresAt) {
       localStorage.removeItem("currentUser");
       return false;
     }
     return !!user;
   },
 
-  updateUI: () => {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    const cartButton = document.querySelector("#btn-cart");
+  updateUI: async () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const cartButton = document.getElementById("btn-cart");
     const cartCounter = document.querySelector(".cart-counter");
 
-    // Desktop
+    // Desktop UI
     const desktopTrigger = document.querySelector(".user-trigger");
     const desktopDropdown = document.querySelector(".login-dropdown");
     if (desktopTrigger && desktopDropdown) {
-      if (user) {
-        desktopTrigger.innerHTML = user.nickName;
+      if (currentUser) {
+        const nickName = currentUser.nickName || "User";
+        desktopTrigger.textContent = nickName;
         desktopDropdown.innerHTML = `
-          <span class="logged-as">Hai, ${user.nickName}</span>
+          <span class="logged-as">Hai, ${nickName}</span>
           <a href="#" class="logout-btn">Logout</a>
         `;
-        cartCounter.style.display = "block";
-        cartButton.disabled = false;
+        if (cartCounter) {
+          cartCounter.style.display = "block";
+        }
+        if (cartButton) cartButton.disabled = false;
       } else {
         desktopTrigger.innerHTML = '<i class="bx bxs-user"></i>';
         desktopDropdown.innerHTML = `
-          <a href="../loginpage/loginpage.html?return=${encodeURIComponent(
-            window.location.href
-          )}" class="login-btn">Masuk</a>
-          <a href="#" class="register-btn">Daftar</a>
+          <a href="../loginpage/loginpage.html" class="login-btn">Masuk</a>
+          <a href="../registerpage/registerpage.html" class="register-btn">Daftar</a>
         `;
-        cartCounter.style.display = "none";
-        cartButton.disabled = true;
+        if (cartCounter) {
+          cartCounter.style.display = "none";
+          cartCounter.textContent = "";
+        }
+        if (cartButton) cartButton.disabled = true;
       }
     }
 
-    // Mobile
-    const mobileUser = document.querySelector(".mobile-user-icon");
-    if (mobileUser) {
-      if (user) {
-        mobileUser.innerHTML = user.nickName;
-        mobileUser.classList.add("logged-in");
-        mobileUser.href = "javascript:void(0)";
+    // Mobile UI
+    const mobileUserIcon = document.querySelector(".mobile-user-icon");
+    if (mobileUserIcon) {
+      if (currentUser) {
+        const nickName = currentUser.nickName || "User";
+        mobileUserIcon.textContent = nickName;
+        mobileUserIcon.classList.add("logged-in");
+        mobileUserIcon.href = "#";
 
-        mobileUser.addEventListener("click", (e) => {
+        mobileUserIcon.addEventListener("click", (e) => {
           e.preventDefault();
           showLogoutConfirmation();
         });
       } else {
-        mobileUser.innerHTML = '<i class="bx bxs-user"></i>';
-        mobileUser.classList.remove("logged-in");
-        mobileUser.href = `../loginpage/loginpage.html?return=${encodeURIComponent(
-          window.location.href
-        )}`;
+        mobileUserIcon.innerHTML = '<i class="bx bxs-user"></i>';
+        mobileUserIcon.classList.remove("logged-in");
+        mobileUserIcon.href = "../loginpage/loginpage.html";
       }
     }
+
+    // Perbarui jumlah item di keranjang
+    updateCartCounter(currentUser?.email);
   },
 
   logout: () => {
     localStorage.removeItem("currentUser");
-    Auth.updateUI();
     Swal.fire({
       icon: "success",
-      title: "Logout Berhasil",
+      title: "Logout berhasil",
       showConfirmButton: false,
       timer: 1500,
     }).then(() => {
@@ -518,15 +514,16 @@ const Auth = {
   },
 };
 
-// Proteksi halaman keranjang
+// Melindungi akses ke halaman keranjang
 const protectCartPage = () => {
-  if (window.location.pathname.includes("/cart/") && !Auth.checkSession()) {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser && window.location.pathname.includes("/cart/")) {
     const returnUrl = encodeURIComponent(window.location.href);
     window.location.href = `../loginpage/loginpage.html?return=${returnUrl}`;
   }
 };
 
-// Handle klik ikon keranjang
+// Penanganan klik pada tombol keranjang
 const handleCartClick = (e) => {
   e.preventDefault();
   e.stopImmediatePropagation();
@@ -534,25 +531,27 @@ const handleCartClick = (e) => {
   if (Auth.checkSession()) {
     window.location.href = e.currentTarget.getAttribute("href");
   } else {
+    const returnUrl = encodeURIComponent(window.location.href);
+
     Swal.fire({
       title: "Login Diperlukan",
-      text: "Silakan login untuk mengakses keranjang belanja",
+      text: "Silakan login untuk mengakses keranjang belanja.",
       icon: "info",
       showCancelButton: true,
       confirmButtonText: "Login",
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        const returnUrl = encodeURIComponent(window.location.href);
         window.location.href = `../loginpage/loginpage.html?return=${returnUrl}`;
       }
     });
   }
 };
 
-// Event Listeners Utama
-document.addEventListener("DOMContentLoaded", () => {
-  Auth.updateUI();
+// Inisialisasi ketika DOM selesai dimuat
+document.addEventListener("DOMContentLoaded", async () => {
+  await Auth.updateUI(); // PENJELASAN: Perbarui tampilan berdasarkan status login
+  updateCartCounter();
 
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("logout-btn")) {
@@ -566,18 +565,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  protectCartPage();
+  protectCartPage(); // PENJELASAN: Cek sesi saat load halaman
 
   document.querySelectorAll("#btn-cart, .mobile-cart").forEach((cart) => {
     cart.addEventListener("click", handleCartClick);
   });
 });
 
+// Pemeriksaan sesi pengguna setiap 60 detik
 setInterval(() => {
   protectCartPage();
 }, 60000);
 
-// Helper untuk konfirmasi logout
+// Fungsi konfirmasi logout
 function showLogoutConfirmation() {
   Swal.fire({
     title: "Logout",
@@ -592,5 +592,14 @@ function showLogoutConfirmation() {
     if (result.isConfirmed) {
       Auth.logout();
     }
+  });
+}
+
+// Update counter keranjang
+function updateCartCounter() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+  document.querySelectorAll(".cart-counter").forEach((counter) => {
+    counter.textContent = totalItems;
   });
 }

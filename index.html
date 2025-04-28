@@ -1034,39 +1034,6 @@
       });
     </script>
 
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js"></script>
-
-    <!-- FIREBASE -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-      import {
-        getAuth,
-        signInWithEmailAndPassword,
-        createUserWithEmailAndPassword,
-      } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-      import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-      // Konfigurasi Firebase
-      const firebaseConfig = {
-        apiKey: "AIzaSyA_rMayX5qfysHqNLyuHu4t-T1z847iTls",
-        authDomain: "neptunes-login.firebaseapp.com",
-        projectId: "neptunes-login",
-        storageBucket: "neptunes-login.firebasestorage.app",
-        messagingSenderId: "234729892005",
-        appId: "1:234729892005:web:f7aaaf0deeb1a4ddfa854c",
-      };
-
-      // Inisialisasi Firebase App
-      const app = initializeApp(firebaseConfig);
-      // Initialize Firebase Auth and Firestore
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-
-      // Ekspos objek ke global scope jika diperlukan
-      window.auth = auth;
-      window.db = db;
-    </script>
-
     <script src="js/script.js?v=1.0.1"></script>
     <!-- Alert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
