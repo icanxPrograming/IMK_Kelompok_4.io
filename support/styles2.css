@@ -746,7 +746,7 @@ section {
     height: 100vh;
   }
   .main-text {
-    padding: 2rem 5rem;
+    padding: 2rem 3rem;
   }
   .main-text h4 {
     font-size: 1.1rem;
@@ -767,7 +767,7 @@ section {
     list-style-position: inside;
     font-weight: 300;
     margin-bottom: 1.2rem;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
   .main-text ol li span {
     font-weight: 400;
@@ -874,7 +874,7 @@ section {
     height: 100vh;
   }
   .main-text {
-    padding: 2rem 5rem;
+    padding: 2rem 1.5rem;
   }
   .main-text h4 {
     font-size: 1rem;
@@ -895,7 +895,7 @@ section {
     list-style-position: inside;
     font-weight: 300;
     margin-bottom: 1.2rem;
-    font-size: 1.1rem;
+    font-size: 15px;
   }
   .main-text ol li span {
     font-weight: 400;
@@ -977,7 +977,7 @@ section {
     list-style-position: inside;
     font-weight: 300;
     margin-bottom: 1.2rem;
-    font-size: 1.1rem;
+    font-size: 14.5px;
   }
   .main-text ol li span {
     font-weight: 400;
@@ -1107,7 +1107,7 @@ section {
     height: 100vh;
   }
   .main-text {
-    padding: 0 2rem;
+    padding: 0 1.5rem;
   }
   .main-text h4 {
     font-size: 1rem;
@@ -1128,7 +1128,7 @@ section {
     list-style-position: inside;
     font-weight: 300;
     margin-bottom: 1.2rem;
-    font-size: 1.1rem;
+    font-size: 12px;
   }
   .main-text ol li span {
     font-weight: 400;
@@ -1330,12 +1330,15 @@ section {
     padding-left: 1rem;
   }
   .main-text h1 {
-    font-size: 25px;
+    font-size: 20px;
     transition: 0.4s;
   }
   .main-text p {
     font-size: 13px;
     transition: 0.4s;
+  }
+  .main-text ol li {
+    font-size: 10px;
   }
   .main-btn {
     padding: 8px 17px;
