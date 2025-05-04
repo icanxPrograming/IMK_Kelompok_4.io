@@ -375,6 +375,7 @@ input[type="checkbox"] {
 .price-slider {
   width: 100%;
   margin: 15px 0;
+  accent-color: black;
 }
 
 .price-labels {
@@ -499,7 +500,8 @@ input[type="checkbox"] {
 }
 
 .add-to-cart:hover {
-  background-color: #ff4444;
+  background-color: #eceaea;
+  color: #000;
 }
 
 .add-to-cart:disabled {
