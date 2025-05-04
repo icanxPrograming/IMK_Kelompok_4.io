@@ -144,44 +144,54 @@ document.addEventListener("DOMContentLoaded", () => {
   const setupWhatsAppButton = () => {
     document.getElementById("confirmBtn").addEventListener("click", () => {
       Swal.fire({
-        icon: "info",
-        title: "Konfirmasi Pembayaran",
-        text: "Saat konfirmasi, dimohon untuk menyertakan bukti pembayaran langsung di WhatsApp.",
-        confirmButtonText: "OK",
+        icon: "question",
+        title: "Apakah Anda yakin sudah melakukan pembayaran?",
+        text: "Konfirmasi ini akan menghapus keranjang dan mengarahkan Anda ke WhatsApp.",
+        showCancelButton: true,
+        confirmButtonText: "Ya, saya sudah bayar",
+        cancelButtonText: "Belum",
       }).then((result) => {
         if (result.isConfirmed) {
-          localStorage.removeItem("cart"); // Benar
-          localStorage.removeItem("cart_note"); // Jika kamu juga ingin bersihkan catatan checkout
+          localStorage.removeItem("cart");
+          localStorage.removeItem("cart_note");
 
           const now = new Date().toLocaleString("id-ID");
           const whatsappMessage = `Halo NEPTUNES Store, berikut detail pembayaran saya:
-  %0A%0A👤 *Data Pembeli*
-  %0ANama: ${paymentData.buyer.firstName} ${paymentData.buyer.lastName}
-  %0AAlamat: ${paymentData.buyer.address}, ${paymentData.buyer.city}
-  %0AProvinsi: ${paymentData.buyer.province}
-  %0AKode Pos: ${paymentData.buyer.postalCode}
-  %0ATelp: ${paymentData.buyer.phone}
   
-  %0A🛒 *Detail Pesanan*%0A${paymentData.items
+  👤 *Data Pembeli*
+  Nama: ${paymentData.buyer.firstName} ${paymentData.buyer.lastName}
+  Alamat: ${paymentData.buyer.address}, ${paymentData.buyer.city}
+  Provinsi: ${paymentData.buyer.province}
+  Kode Pos: ${paymentData.buyer.postalCode}
+  Telp: ${paymentData.buyer.phone}
+  
+  🛒 *Detail Pesanan*
+  ${paymentData.items
     .map(
       (item) =>
-        `- ${item.name} (${item.quantity}x) : Rp ${(
+        `• ${item.name} (${item.quantity}x): Rp ${(
           item.price * item.quantity
         ).toLocaleString("id-ID")}`
     )
-    .join("%0A")}
+    .join("\n")}
   
-  %0A💳 *Pembayaran*
-  %0AMetode: ${paymentData.payment.method} - ${paymentData.payment.detail}
-  %0ATotal: ${paymentData.total}
+  💳 *Pembayaran*
+  Metode: ${paymentData.payment.method} - ${paymentData.payment.detail}
+  Total: ${paymentData.total}
   
-  %0A🕒 Pesanan dibuat pada: ${now}
-  %0A📎 *Bukti Pembayaran* (harap dilampirkan di WA)`;
+  🕒 Pesanan dibuat pada: ${now}
+  📎 *Bukti Pembayaran* (harap dilampirkan di WA)`;
 
           window.open(
-            `https://wa.me/6282121884390?text=${whatsappMessage}`,
+            `https://wa.me/6282121884390?text=${encodeURIComponent(
+              whatsappMessage
+            )}`,
             "_blank"
           );
+
+          setTimeout(() => {
+            window.location.href = "../index.html";
+          }, 300);
         }
       });
     });
