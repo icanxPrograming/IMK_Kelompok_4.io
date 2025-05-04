@@ -1075,7 +1075,7 @@ section {
   header {
     position: fixed; /* Diubah dari fixed ke static */
     width: 100%;
-    top: 40px; /* Sesuaikan dengan tinggi promo header */
+    top: 37px; /* Sesuaikan dengan tinggi promo header */
     right: 0;
     z-index: 1000;
     display: flex;
@@ -1212,7 +1212,7 @@ section {
   header {
     position: fixed; /* Diubah dari fixed ke static */
     width: 100%;
-    top: 35px; /* Sesuaikan dengan tinggi promo header */
+    top: 32px; /* Sesuaikan dengan tinggi promo header */
     right: 0;
     z-index: 1000;
     display: flex;
