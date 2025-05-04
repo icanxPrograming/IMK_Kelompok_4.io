@@ -28,6 +28,78 @@ document.querySelector("#btn-search").onclick = (e) => {
   e.preventDefault();
 };
 
+function handleSearch() {
+  const keyword = document
+    .getElementById("search-box")
+    .value.toLowerCase()
+    .trim();
+
+  // Gunakan path relatif (../)
+  const keywordMap = {
+    "../produkpage/pagekaos.html": ["kaos", "ka", "kaos pria", "t-shirt"],
+    "../produkpage/pagekemeja.html": ["kemeja", "kem", "shirt", "kemeja pria"],
+    "../produkpage/pagehoodie.html": ["hoodie", "jaket", "sweater"],
+    "../produkpage/pagelimitededition.html": [
+      "limited",
+      "edisi terbatas",
+      "limited edition",
+    ],
+    "../produkpage/pagesale.html": ["sale", "diskon", "promo"],
+    "../produkpage/pagerayaseries.html": ["raya", "lebaran", "idul fitri"],
+
+    "../support/pageFAQs.html": ["cara", "order", "cara order", "pemesanan"],
+    "../support/pageReturn.html": ["return", "refund", "pengembalian", "retur"],
+    "../support/pageAbout.html": [
+      "tentang",
+      "about",
+      "tentang kami",
+      "info toko",
+    ],
+  };
+
+  let found = false;
+
+  for (const [page, keywords] of Object.entries(keywordMap)) {
+    if (keywords.some((kw) => keyword.includes(kw) || kw.includes(keyword))) {
+      window.location.href = page;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    showSearchAlert(
+      "Kategori tidak ditemukan. Coba kata kunci seperti: kaos, hoodie, return, tentang, dll."
+    );
+  }
+}
+
+// ENTER key handler
+document.getElementById("search-box").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleSearch();
+  }
+});
+
+// Klik ikon pencarian handler (pastikan id: search-icon-btn)
+document
+  .getElementById("search-icon-btn")
+  .addEventListener("click", function () {
+    handleSearch();
+  });
+
+// Alert box tampil di atas form
+const showSearchAlert = (message) => {
+  const alertBox = document.getElementById("search-alert");
+  alertBox.textContent = message;
+  alertBox.style.display = "block";
+
+  setTimeout(() => {
+    alertBox.style.display = "none";
+  }, 3000);
+};
+
 // Konten detail produk
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
@@ -270,7 +342,12 @@ function addToCart(button) {
     id: `${decodeURIComponent(params.get("title"))}-${selectedSize}`,
     name: decodeURIComponent(params.get("title")),
     price: parseInt(params.get("price")),
-    image: `../img/${params.get("image")}`,
+    image: `../img/${
+      params
+        .get("images")
+        .split(",")
+        .map((img) => img.trim())[0]
+    }`,
     size: selectedSize,
     quantity: parseInt(document.querySelector(".qty-input").value) || 1,
   };
@@ -340,7 +417,12 @@ document.getElementById("buyBtn").addEventListener("click", () => {
     id: `${decodeURIComponent(params.get("title"))}-${selectedSize}`,
     name: decodeURIComponent(params.get("title")),
     price: parseInt(params.get("price")),
-    image: `../img/${params.get("image")}`,
+    image: `../img/${
+      params
+        .get("images")
+        .split(",")
+        .map((img) => img.trim())[0]
+    }`,
     size: selectedSize,
     quantity: qty,
   };

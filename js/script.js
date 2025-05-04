@@ -109,6 +109,66 @@ document.querySelector("#btn-search").onclick = (e) => {
   e.preventDefault(); // PENJELASAN: Mencegah reload halaman saat klik tombol search
 };
 
+function handleSearch() {
+  const keyword = document
+    .getElementById("search-box")
+    .value.toLowerCase()
+    .trim();
+
+  const keywordMap = {
+    "produkpage/pagekaos.html": ["kaos", "ka", "t-shirt", "kaos pria"],
+    "produkpage/pagekemeja.html": ["kemeja", "kem", "shirt", "kemeja pria"],
+    "produkpage/pagehoodie.html": ["hoodie", "jaket", "sweater"],
+    "produkpage/pagelimitededition.html": ["limited", "edisi terbatas"],
+    "produkpage/pagesale.html": ["sale", "diskon", "promo"],
+    "produkpage/pagerayaseries.html": ["raya", "lebaran", "idul fitri"],
+
+    "support/pageFAQs.html": ["cara", "order", "cara order", "pemesanan"],
+    "support/pageReturn.html": ["return", "refund", "pengembalian", "retur"],
+    "support/pageAbout.html": ["tentang", "about", "tentang kami", "info toko"],
+  };
+
+  let found = false;
+
+  for (const [page, keywords] of Object.entries(keywordMap)) {
+    if (keywords.some((kw) => keyword.includes(kw) || kw.includes(keyword))) {
+      window.location.href = page;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    showSearchAlert(
+      "Kategori tidak ditemukan. Coba kata kunci seperti: kaos, hoodie, return, tentang, dll."
+    );
+  }
+}
+
+document.getElementById("search-box").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleSearch();
+  }
+});
+
+document
+  .getElementById("search-icon-btn")
+  .addEventListener("click", function () {
+    handleSearch();
+  });
+
+const showSearchAlert = (message) => {
+  const alertBox = document.getElementById("search-alert");
+  alertBox.textContent = message;
+  alertBox.style.display = "block";
+
+  // Sembunyikan setelah 3 detik
+  setTimeout(() => {
+    alertBox.style.display = "none";
+  }, 3000);
+};
+
 // Navigasi berdasarkan kategori produk
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("home").addEventListener("click", function () {

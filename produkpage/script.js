@@ -27,6 +27,71 @@ document.addEventListener("click", (e) => {
   }
 });
 
+function handleSearch() {
+  const keyword = document
+    .getElementById("search-box")
+    .value.toLowerCase()
+    .trim();
+
+  const keywordMap = {
+    "pagekaos.html": ["kaos", "ka", "t-shirt", "kaos pria"],
+    "pagekemeja.html": ["kemeja", "kem", "shirt", "kemeja pria"],
+    "pagehoodie.html": ["hoodie", "jaket", "sweater"],
+    "pagelimitededition.html": ["limited", "edisi terbatas"],
+    "pagesale.html": ["sale", "diskon", "promo"],
+    "pagerayaseries.html": ["raya", "lebaran", "idul fitri"],
+
+    "../support/pageFAQs.html": ["cara", "order", "cara order", "pemesanan"],
+    "../support/pageReturn.html": ["return", "refund", "pengembalian", "retur"],
+    "../support/pageAbout.html": [
+      "tentang",
+      "about",
+      "tentang kami",
+      "info toko",
+    ],
+  };
+
+  let found = false;
+
+  for (const [page, keywords] of Object.entries(keywordMap)) {
+    if (keywords.some((kw) => keyword.includes(kw) || kw.includes(keyword))) {
+      window.location.href = page;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    showSearchAlert(
+      "Kategori tidak ditemukan. Coba kata kunci seperti: kaos, hoodie, return, tentang, dll."
+    );
+  }
+}
+
+document.getElementById("search-box").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleSearch();
+  }
+});
+
+document
+  .getElementById("search-icon-btn")
+  .addEventListener("click", function () {
+    handleSearch();
+  });
+
+const showSearchAlert = (message) => {
+  const alertBox = document.getElementById("search-alert");
+  alertBox.textContent = message;
+  alertBox.style.display = "block";
+
+  // Sembunyikan setelah 3 detik
+  setTimeout(() => {
+    alertBox.style.display = "none";
+  }, 3000);
+};
+
 // ===== TOGGLE DROPDOWN FILTER =====
 document.addEventListener("DOMContentLoaded", () => {
   const toggleBtn = document.getElementById("filterToggleBtn");

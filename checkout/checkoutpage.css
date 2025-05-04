@@ -219,12 +219,23 @@ input:focus {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .checkout-container {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
+
+  .checkout-right {
+    order: -1; /* Tampilkan di atas form saat mobile */
+  }
+
+  .checkout-form {
+    order: 0;
+  }
+
   .dual-input,
   .triple-grid {
     grid-template-columns: 1fr !important;
   }
+
   .product-item img {
     width: 60px;
     height: 60px;
@@ -273,4 +284,8 @@ input:focus {
   align-items: center;
   padding: 12px 0;
   display: flex !important;
+}
+
+.note-section h3 {
+  font-size: 1rem;
 }

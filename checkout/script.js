@@ -33,6 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
     loadCartData(); // Ganti loadProduct() dengan loadCartData()
     setupEventListeners();
     initializeUIState();
+
+    const savedNote = sessionStorage.getItem("checkoutNote");
+    if (savedNote && savedNote.trim() !== "") {
+      const noteElement = document.getElementById("noteDisplay");
+      if (noteElement) {
+        noteElement.textContent = savedNote;
+      }
+    }
   };
 
   // ======= FUNGSI BARU =======
@@ -93,6 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
           <span>Total</span>
           <span>${formatCurrency(productSubtotal)}</span>
         </div>
+      </div>
+      <hr class="item-divider">
+      <!-- ✅ Tambahkan catatan -->
+      <div class="note-section">
+        <h3>Catatan untuk Penjual</h3>
+        </br>
+        <p id="noteDisplay">"Tidak ada catatan."</p>
       </div>
     `;
 
@@ -275,6 +290,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .querySelector('input[name="paymentDetail"]:checked')
       .parentElement.querySelector(".payment-title").textContent;
 
+    const noteText =
+      document.getElementById("noteDisplay")?.textContent ||
+      "Tidak ada catatan.";
+
     Swal.fire({
       icon: "question",
       title: "Konfirmasi Pesanan",
@@ -298,6 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           total: elements.summary.total.textContent,
           items: JSON.parse(sessionStorage.getItem("checkoutProduct")),
+          note: noteText,
         };
         sessionStorage.setItem("paymentData", JSON.stringify(paymentData));
         window.location.href = "../payment/paymentpage.html";

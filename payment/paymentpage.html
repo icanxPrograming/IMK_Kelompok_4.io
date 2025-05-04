@@ -47,6 +47,7 @@
             <p>Provinsi: <span id="buyer-province"></span></p>
             <p>Kode Pos: <span id="buyer-postalcode"></span></p>
             <p>Telepon: <span id="buyer-phone"></span></p>
+            <p>Catatan: <span id="buyer-note"></span></p>
           </div>
 
           <div class="order-items" id="order-items"></div>
@@ -67,21 +68,24 @@
           <div class="qr-section" id="qr-section">
             <img src="../img/qris-demo.jpg" alt="QR Code Pembayaran" />
             <p>Scan QR Code di atas untuk melakukan pembayaran</p>
+            <br />
+            <p>
+              CATATAN: Jika QR error, silakan transfer ke nomor di bawah ini!
+            </p>
+            <p>0818-0831-3324 -> DANA, GOPAY, SHOPEEPAY</p>
           </div>
         </section>
 
         <!-- Upload Bukti Pembayaran -->
         <section class="payment-proof">
-          <h2>Upload Bukti Pembayaran</h2>
           <form id="paymentForm">
-            <div class="upload-container">
-              <input type="file" id="paymentProof" accept="image/*" hidden />
-              <label for="paymentProof" class="upload-label">
-                <i class="bx bx-cloud-upload"></i>
-                <span>Pilih File atau Tarik ke sini</span>
-              </label>
-              <div id="preview-container"></div>
-            </div>
+            <label for="paymentProof" class="upload-label">
+              <p style="margin-top: 1rem; font-weight: 600; color: #d9534f">
+                ⚠️ Jangan lupa *sertakan bukti pembayaran* saat konfirmasi via
+                WhatsApp.
+              </p>
+            </label>
+            <br />
             <button type="button" class="whatsapp-btn" id="confirmBtn">
               Konfirmasi via WhatsApp
             </button>

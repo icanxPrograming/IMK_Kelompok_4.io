@@ -194,11 +194,16 @@ header {
   padding: 1rem;
 }
 
-.search-form label {
+.search-form button {
+  background: none;
+  border: none;
   cursor: pointer;
-  font-size: 1rem;
-  margin-right: 1rem;
-  color: #111;
+  padding: 8px;
+  color: #333;
+}
+
+.search-form i {
+  font-size: 20px;
 }
 
 /* Shopping cart */
@@ -1249,6 +1254,10 @@ input[type="checkbox"] {
   .header-sec {
     padding: 10% 10%;
   }
+  .promo-header {
+    font-size: 11px;
+  }
+
   .logo img {
     max-width: 120px;
   }
@@ -1384,7 +1393,7 @@ input[type="checkbox"] {
     transition: all 0.3s ease;
   }
   .promo-header {
-    font-size: 10px;
+    font-size: 8px;
   }
   .header-sec {
     padding: 10% 10%;

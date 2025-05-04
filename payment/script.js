@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     subtotal: document.getElementById("subtotal-amount"),
     shipping: document.getElementById("shipping-fee"),
     total: document.getElementById("total-amount"),
+    note: document.getElementById("buyer-note"),
   };
 
   const paymentInstructionElement = document.getElementById(
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
       provinceNames[paymentData.buyer.province] || paymentData.buyer.province;
     buyerElements.postalcode.textContent = paymentData.buyer.postalCode;
     buyerElements.phone.textContent = paymentData.buyer.phone;
+    buyerElements.note.textContent = paymentData.note || "Tidak ada catatan.";
   };
 
   // Fungsi untuk menampilkan item pesanan
@@ -96,6 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Bank Mandiri</strong></p>
           <p>No. Rekening: 123-456-7890</p>
           <p>Atas Nama: PT. NEPTUNES Store</p>
+          <br>
+          <p>Jika bank error transfer ke nomor di bawah ini!</p>
+          <p><strong>0818-0831-3324 -> DANA, GOPAY, SHOPEEPAY</strong></p>
         </div>
       `,
       QRIS: `
@@ -138,33 +143,47 @@ document.addEventListener("DOMContentLoaded", () => {
   // WhatsApp konfirmasi (Versi tanpa backend)
   const setupWhatsAppButton = () => {
     document.getElementById("confirmBtn").addEventListener("click", () => {
-      const whatsappMessage = `Halo NEPTUNES Store, berikut detail pembayaran saya:
-%0A%0A👤 *Data Pembeli*
-%0ANama: ${paymentData.buyer.firstName} ${paymentData.buyer.lastName}
-%0AAlamat: ${paymentData.buyer.address}, ${paymentData.buyer.city}
-%0AProvinsi: ${paymentData.buyer.province}
-%0AKode Pos: ${paymentData.buyer.postalCode}
-%0ATelp: ${paymentData.buyer.phone}
+      Swal.fire({
+        icon: "info",
+        title: "Konfirmasi Pembayaran",
+        text: "Saat konfirmasi, dimohon untuk menyertakan bukti pembayaran langsung di WhatsApp.",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          localStorage.removeItem("cart"); // Benar
+          localStorage.removeItem("cart_note"); // Jika kamu juga ingin bersihkan catatan checkout
 
-%0A🛒 *Detail Pesanan*%0A${paymentData.items
-        .map(
-          (item) =>
-            `- ${item.name} (${item.quantity}x) : Rp ${(
-              item.price * item.quantity
-            ).toLocaleString()}`
-        )
-        .join("%0A")}
+          const now = new Date().toLocaleString("id-ID");
+          const whatsappMessage = `Halo NEPTUNES Store, berikut detail pembayaran saya:
+  %0A%0A👤 *Data Pembeli*
+  %0ANama: ${paymentData.buyer.firstName} ${paymentData.buyer.lastName}
+  %0AAlamat: ${paymentData.buyer.address}, ${paymentData.buyer.city}
+  %0AProvinsi: ${paymentData.buyer.province}
+  %0AKode Pos: ${paymentData.buyer.postalCode}
+  %0ATelp: ${paymentData.buyer.phone}
+  
+  %0A🛒 *Detail Pesanan*%0A${paymentData.items
+    .map(
+      (item) =>
+        `- ${item.name} (${item.quantity}x) : Rp ${(
+          item.price * item.quantity
+        ).toLocaleString("id-ID")}`
+    )
+    .join("%0A")}
+  
+  %0A💳 *Pembayaran*
+  %0AMetode: ${paymentData.payment.method} - ${paymentData.payment.detail}
+  %0ATotal: ${paymentData.total}
+  
+  %0A🕒 Pesanan dibuat pada: ${now}
+  %0A📎 *Bukti Pembayaran* (harap dilampirkan di WA)`;
 
-%0A💳 *Pembayaran*
-%0AMetode: ${paymentData.payment.method} - ${paymentData.payment.detail}
-%0ATotal: ${paymentData.total}
-
-%0A📎 *Bukti Pembayaran* (terlampir)`;
-
-      window.open(
-        `https://wa.me/6281234567890?text=${whatsappMessage}`,
-        "_blank"
-      );
+          window.open(
+            `https://wa.me/6282121884390?text=${whatsappMessage}`,
+            "_blank"
+          );
+        }
+      });
     });
   };
 
@@ -175,37 +194,4 @@ document.addEventListener("DOMContentLoaded", () => {
   displayPaymentInstructions();
   startCountdown();
   setupWhatsAppButton();
-
-  // Modifikasi handle file upload untuk preview
-  document
-    .getElementById("paymentProof")
-    .addEventListener("change", function (e) {
-      const file = e.target.files[0];
-      const previewContainer = document.getElementById("preview-container");
-
-      if (file) {
-        // Validasi tipe file
-        if (!file.type.startsWith("image/")) {
-          Swal.fire({
-            icon: "error",
-            title: "File Tidak Valid",
-            text: "Hanya file gambar yang diperbolehkan",
-          });
-          this.value = ""; // Reset input
-          return;
-        }
-
-        // Tampilkan preview
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          previewContainer.innerHTML = `
-        <img src="${
-          event.target.result
-        }" alt="Preview Bukti" style="max-width: 200px; margin-top: 1rem;">
-        <p>${file.name} (${(file.size / 1024).toFixed(1)} KB)</p>
-      `;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
 });

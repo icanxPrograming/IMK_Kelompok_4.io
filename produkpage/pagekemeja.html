@@ -82,8 +82,10 @@
         </div>
 
         <div class="search-form">
-          <input type="search" id="search-box" placeholder="search her..." />
-          <label for="search-box"><i class="bx bx-search"></i></label>
+          <input type="search" id="search-box" placeholder="search here..." />
+          <button id="search-icon-btn" type="button">
+            <i class="bx bx-search"></i>
+          </button>
         </div>
 
         <div class="shopping-cart">
@@ -92,6 +94,26 @@
       </header>
     </section>
     <!-- Header end -->
+
+    <div
+      id="search-alert"
+      style="
+        display: none;
+        position: absolute;
+        top: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ffdddd;
+        color: #a00;
+        padding: 10px 20px;
+        border: 1px solid #f5c2c2;
+        border-radius: 5px;
+        font-size: 14px;
+        z-index: 9999999;
+      "
+    >
+      Kategori tidak ditemukan. Coba kata kunci lain.
+    </div>
 
     <!-- Tambahkan ini SEBELUM .main-content -->
     <div class="mobile-filter-trigger">
