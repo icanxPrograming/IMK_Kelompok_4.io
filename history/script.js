@@ -1,3 +1,5 @@
+// import "boxicons/css/boxicons.min.css";
+
 // Mengatur toggle menu pada ikon hamburger
 const header = document.querySelector("header");
 
@@ -37,16 +39,11 @@ function handleSearch() {
     .value.toLowerCase()
     .trim();
 
-  // Gunakan path relatif (../)
   const keywordMap = {
-    "../produkpage/pagekaos.html": ["kaos", "ka", "kaos pria", "t-shirt"],
+    "../produkpage/pagekaos.html": ["kaos", "ka", "t-shirt", "kaos pria"],
     "../produkpage/pagekemeja.html": ["kemeja", "kem", "shirt", "kemeja pria"],
     "../produkpage/pagehoodie.html": ["hoodie", "jaket", "sweater"],
-    "../produkpage/pagelimitededition.html": [
-      "limited",
-      "edisi terbatas",
-      "limited edition",
-    ],
+    "../produkpage/pagelimitededition.html": ["limited", "edisi terbatas"],
     "../produkpage/pagesale.html": ["sale", "diskon", "promo"],
     "../produkpage/pagerayaseries.html": ["raya", "lebaran", "idul fitri"],
 
@@ -77,7 +74,6 @@ function handleSearch() {
   }
 }
 
-// ENTER key handler
 document.getElementById("search-box").addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -85,19 +81,18 @@ document.getElementById("search-box").addEventListener("keydown", function (e) {
   }
 });
 
-// Klik ikon pencarian handler (pastikan id: search-icon-btn)
 document
   .getElementById("search-icon-btn")
   .addEventListener("click", function () {
     handleSearch();
   });
 
-// Alert box tampil di atas form
 const showSearchAlert = (message) => {
   const alertBox = document.getElementById("search-alert");
   alertBox.textContent = message;
   alertBox.style.display = "block";
 
+  // Sembunyikan setelah 3 detik
   setTimeout(() => {
     alertBox.style.display = "none";
   }, 3000);
@@ -107,20 +102,10 @@ const showSearchAlert = (message) => {
 document.querySelectorAll(".cart-icon").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
-    window.location.href = "../cart/cartpage.html"; // PENJELASAN: Arahkan ke halaman keranjang
+    window.location.href = "cart/cartpage.html"; // PENJELASAN: Arahkan ke halaman keranjang
   });
 });
 
-// Pencegahan default saat klik profil user (mode desktop)
-document.querySelectorAll(".user-trigger").forEach((trigger) => {
-  trigger.addEventListener("click", (e) => {
-    if (window.innerWidth > 630) {
-      e.preventDefault();
-    }
-  });
-});
-
-// Objek untuk mengelola sesi pengguna
 // Pencegahan default saat klik profil user (mode desktop)
 document.querySelectorAll(".user-trigger").forEach((trigger) => {
   trigger.addEventListener("click", (e) => {
@@ -155,8 +140,8 @@ const Auth = {
         desktopTrigger.textContent = nickName;
         desktopDropdown.innerHTML = `
           <span class="logged-as">Hai, ${nickName}</span>
-          <a href="../history/historypage.html" class="history-btn">
-          Riwayat Pesanan
+          <a href="historypage.html" class="history-btn">
+            Riwayat Pesanan
           </a>
           <a href="#" class="logout-btn">Logout</a>
         `;
@@ -197,9 +182,9 @@ const Auth = {
         // Tambahkan tombol history di bottom navbar (jika belum ada)
         if (!document.querySelector(".mobile-history-icon")) {
           const historyLink = document.createElement("a");
-          historyLink.href = "../history/historypage.html";
+          historyLink.href = "historypage.html";
           historyLink.className = "mobile-history-icon";
-          historyLink.innerHTML = '<i class="bx bxs-receipt"></i>';
+          historyLink.innerHTML = '<i class="bx bx-note"></i>';
           historyLink.title = "Riwayat Pesanan";
           bottomNavbar.appendChild(historyLink);
         }
@@ -244,6 +229,22 @@ const protectCartPage = () => {
   }
 };
 
+// Fungsi proteksi opsional
+function protectHistoryPage() {
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  if (!currentUser) {
+    Swal.fire({
+      icon: "info",
+      title: "Akses Dibatasi",
+      text: "Silakan login untuk melihat riwayat pesanan Anda.",
+      showConfirmButton: true,
+      confirmButtonText: "Login Sekarang",
+    }).then(() => {
+      window.location.href = "../loginpage/loginpage.html";
+    });
+  }
+}
+
 // Penanganan klik pada tombol keranjang
 const handleCartClick = (e) => {
   e.preventDefault();
@@ -269,10 +270,255 @@ const handleCartClick = (e) => {
   }
 };
 
+function initializeOrderHistory() {
+  let currentPage = 1;
+  const itemsPerPage = 5;
+
+  function renderOrders(filteredOrders) {
+    const container = document.querySelector(".order-history-container");
+    const emptyState = document.querySelector(".empty-history");
+
+    if (!container) return;
+    container.innerHTML = "";
+
+    if (filteredOrders.length === 0) {
+      emptyState.style.display = "block";
+      return;
+    }
+
+    emptyState.style.display = "none";
+
+    const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+    const startIdx = (currentPage - 1) * itemsPerPage;
+    const paginatedOrders = filteredOrders.slice(
+      startIdx,
+      startIdx + itemsPerPage
+    );
+
+    paginatedOrders.forEach((order) => {
+      const card = document.createElement("div");
+      card.className = "order-card";
+      card.innerHTML = `
+        <div class="order-header">
+          <div class="order-info">
+            <span class="order-id">${order.id}</span>
+            <span class="order-date">${formatDate(order.date)}</span>
+          </div>
+          <span class="order-status ${order.status}">${getStatusLabel(
+        order.status
+      )}</span>
+        </div>
+        <div class="order-items">
+          ${order.items
+            .map(
+              (item) => `
+            <div class="order-item">
+              <img src="${item.image}" alt="${item.name}" class="item-img" />
+              <div class="item-details">
+                <h4 class="item-name">${item.name}</h4>
+                <p class="item-variant">${item.variant}</p>
+                <p class="item-price">Rp ${(
+                  item.price * item.qty
+                ).toLocaleString("id-ID")}</p>
+              </div>
+            </div>
+          `
+            )
+            .join("")}
+        </div>
+        <div class="order-footer">
+          <div class="order-total">
+            <span>Total Pesanan:</span>
+            <span class="total-amount">Rp ${order.items
+              .reduce((sum, i) => sum + i.price * i.qty, 0)
+              .toLocaleString("id-ID")}</span>
+          </div>
+          <div class="order-actions">
+            ${renderDynamicButtons(order)}
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    updatePagination(totalPages);
+  }
+
+  function applyFilters() {
+    const statusFilter = document.getElementById("status-filter").value;
+    const dateFilter = document.getElementById("date-filter").value;
+
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    const filteredOrders = filterOrders(orders, statusFilter, dateFilter);
+    renderOrders(filteredOrders);
+  }
+
+  function filterOrders(orders, statusFilter, dateFilter) {
+    const now = new Date();
+    return orders.filter((order) => {
+      if (statusFilter !== "all" && order.status !== statusFilter) return false;
+      if (dateFilter !== "all") {
+        const orderDate = new Date(order.date);
+        switch (dateFilter) {
+          case "week":
+            return (
+              orderDate >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+            );
+          case "month":
+            return (
+              orderDate >=
+              new Date(now.getFullYear(), now.getMonth() - 1, now.getDate())
+            );
+          case "3months":
+            return (
+              orderDate >=
+              new Date(now.getFullYear(), now.getMonth() - 3, now.getDate())
+            );
+          case "year":
+            return (
+              orderDate >=
+              new Date(now.getFullYear() - 1, now.getMonth(), now.getDate())
+            );
+          default:
+            return true;
+        }
+      }
+      return true;
+    });
+  }
+
+  function updatePagination(totalPages) {
+    const pageNumbers = document.querySelector(".page-numbers");
+    const prevBtn = document.getElementById("prev-page");
+    const nextBtn = document.getElementById("next-page");
+
+    pageNumbers.innerHTML = "";
+    for (let i = 1; i <= totalPages; i++) {
+      const span = document.createElement("span");
+      span.className = `page-number ${i === currentPage ? "active" : ""}`;
+      span.textContent = i;
+      span.addEventListener("click", () => {
+        currentPage = i;
+        applyFilters();
+      });
+      pageNumbers.appendChild(span);
+    }
+
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.classList.toggle("disabled", currentPage === 1);
+    nextBtn.disabled = currentPage === totalPages || totalPages === 0;
+    nextBtn.classList.toggle(
+      "disabled",
+      currentPage === totalPages || totalPages === 0
+    );
+  }
+
+  function formatDate(dateString) {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return new Date(dateString).toLocaleDateString("id-ID", options);
+  }
+
+  function getStatusLabel(status) {
+    const labels = {
+      processing: "Diproses",
+      shipped: "Dikirim",
+      completed: "Selesai",
+      cancelled: "Dibatalkan",
+    };
+    return labels[status] || status;
+  }
+
+  function renderDynamicButtons(order) {
+    const now = new Date();
+    const estimatedDelivery = new Date(order.shipping.estimatedDelivery);
+    const canComplete = order.status === "shipped" && now >= estimatedDelivery;
+    const canRate = order.status === "completed";
+
+    let buttons = "";
+    if (canComplete) {
+      buttons += `<button class="action-btn complete-btn" data-order-id="${order.id}">Selesaikan Pesanan</button>`;
+    }
+    if (canRate) {
+      buttons += `<a href="../review/reviewpage.html?orderId=${encodeURIComponent(
+        order.id
+      )}" class="rate-btn">Nilai Pesanan</a>`;
+    }
+    return buttons;
+  }
+
+  function updateOrderStatuses(orders) {
+    const now = new Date();
+    return orders.map((order) => {
+      if (order.status === "cancelled") return order;
+
+      const processTime = new Date(order.date);
+      processTime.setHours(
+        processTime.getHours() +
+          (new Date(order.date).getHours() >= 16 ? 24 : 12)
+      );
+
+      if (order.status === "processing" && now >= processTime) {
+        order.status = "shipped";
+      }
+
+      const estimatedDelivery = new Date(order.shipping.estimatedDelivery);
+      if (order.status === "shipped" && now >= estimatedDelivery) {
+        order.status = "completed";
+      }
+
+      return order;
+    });
+  }
+
+  // Event listener untuk tombol Selesaikan
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("complete-btn")) {
+      const orderId = e.target.getAttribute("data-order-id");
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      const updatedOrders = orders.map((order) =>
+        order.id === orderId ? { ...order, status: "completed" } : order
+      );
+      localStorage.setItem("orders", JSON.stringify(updatedOrders));
+      applyFilters();
+    }
+  });
+
+  // Update status secara berkala
+  setInterval(() => {
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const updatedOrders = updateOrderStatuses(orders);
+    localStorage.setItem("orders", JSON.stringify(updatedOrders));
+    applyFilters();
+  }, 60000); // Setiap 1 menit
+
+  // Inisialisasi awal
+  document
+    .getElementById("apply-filter")
+    .addEventListener("click", applyFilters);
+  document.getElementById("prev-page").addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      applyFilters();
+    }
+  });
+  document.getElementById("next-page").addEventListener("click", () => {
+    currentPage++;
+    applyFilters();
+  });
+
+  applyFilters();
+}
+
 // Inisialisasi ketika DOM selesai dimuat
 document.addEventListener("DOMContentLoaded", async () => {
   await Auth.updateUI(); // PENJELASAN: Perbarui tampilan berdasarkan status login
   updateCartCounter();
+
+  initializeOrderHistory();
+
+  // Jika halaman history harus login dulu
+  protectHistoryPage();
 
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("logout-btn")) {
@@ -324,261 +570,3 @@ function updateCartCounter() {
     counter.textContent = totalItems;
   });
 }
-
-// ===== VARIABEL UTAMA =====
-let selectedRating = 0;
-
-// ===== FUNGSI UTAMA =====
-document.addEventListener("DOMContentLoaded", function () {
-  // Load semua review awal
-  const allReviews = JSON.parse(localStorage.getItem("userReviews")) || [];
-  renderReviews(allReviews);
-
-  // Inisialisasi
-  loadReviews();
-  setupRatingStars();
-  setupFilter();
-  checkAuthStatus();
-});
-
-// 1. Load reviews dengan filter
-function loadReviews(filter = "all") {
-  const reviews = JSON.parse(localStorage.getItem("userReviews")) || [];
-  let filteredReviews = reviews;
-
-  if (filter !== "all") {
-    filteredReviews = reviews.filter((review) =>
-      filter === "3-" ? review.rating <= 3 : review.rating >= parseInt(filter)
-    );
-  }
-
-  const container = document.getElementById("allReviews");
-  container.innerHTML = filteredReviews
-    .map(
-      (review) => `
-    <div class="review-card">
-      <div class="review-user">
-        <div class="user-info">
-          <h4 class="user-name">${review.name}</h4>
-          <div class="review-date">${new Date(
-            review.date
-          ).toLocaleDateString()}</div>
-        </div>
-      </div>
-      <div class="review-rating">
-        ${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}
-      </div>
-      <p class="review-content">${review.text}</p>
-      ${renderReviewActions(review)}
-    </div>
-  `
-    )
-    .join("");
-}
-
-// 2. Setup rating stars
-function setupRatingStars() {
-  document.querySelectorAll(".rating-star").forEach((star) => {
-    star.addEventListener("click", function () {
-      selectedRating = parseInt(this.dataset.value);
-      document.querySelectorAll(".rating-star").forEach((s, i) => {
-        s.textContent = i < selectedRating ? "★" : "☆";
-      });
-      document.getElementById("ratingValue").value = selectedRating;
-    });
-  });
-}
-
-// ===== FUNGSI FILTER =====
-function setupFilter() {
-  const ratingFilter = document.getElementById("ratingFilter");
-
-  ratingFilter.addEventListener("change", function () {
-    const filterValue = this.value;
-    let filteredReviews = JSON.parse(localStorage.getItem("userReviews")) || [];
-
-    switch (filterValue) {
-      case "5":
-        filteredReviews = filteredReviews.filter((r) => r.rating === 5);
-        break;
-      case "4":
-        filteredReviews = filteredReviews.filter((r) => r.rating >= 4);
-        break;
-      case "3":
-        filteredReviews = filteredReviews.filter((r) => r.rating <= 3);
-        break;
-      case "1":
-        filteredReviews = filteredReviews.filter((r) => r.rating === 1);
-        break;
-      default: // 'all'
-        break;
-    }
-
-    renderReviews(filteredReviews);
-  });
-}
-
-function renderReviews(reviews) {
-  const container = document.getElementById("allReviews");
-
-  if (reviews.length === 0) {
-    container.innerHTML =
-      '<p class="no-reviews">Tidak ada review untuk filter ini</p>';
-    return;
-  }
-
-  container.innerHTML = reviews
-    .map(
-      (review) => `
-    <div class="review-card">
-      <div class="review-user">
-        <div class="user-info">
-          <h4 class="user-name">${review.name}</h4>
-          <div class="review-date">${new Date(
-            review.date
-          ).toLocaleDateString()}</div>
-        </div>
-      </div>
-      <div class="review-rating">
-        ${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}
-      </div>
-      <p class="review-content">${review.text}</p>
-      ${renderReviewActions(review)}
-    </div>
-  `
-    )
-    .join("");
-}
-
-// 4. Cek status auth
-function checkAuthStatus() {
-  const reviewForm = document.getElementById("reviewForm");
-  const loginPrompt = document.getElementById("loginPrompt");
-
-  if (Auth.checkSession()) {
-    const user = JSON.parse(localStorage.getItem("currentUser"));
-    const reviews = JSON.parse(localStorage.getItem("userReviews")) || [];
-    const hasReviewed = reviews.some((review) => review.userId === user.email);
-
-    if (hasReviewed) {
-      reviewForm.style.display = "none";
-      loginPrompt.innerHTML = `
-        <div class="already-reviewed">
-          <i class='bx bxs-check-circle'></i>
-          <p>Anda sudah memberikan review</p>
-          <button onclick="deleteMyReview('${
-            reviews.find((r) => r.userId === user.email).id
-          }')" 
-                  class="btn btn-text">
-            Hapus review saya
-          </button>
-        </div>
-      `;
-    } else {
-      reviewForm.style.display = "block";
-      loginPrompt.style.display = "none";
-    }
-  } else {
-    reviewForm.style.display = "none";
-    loginPrompt.style.display = "block";
-  }
-}
-
-// 5. Handle form submit
-document.getElementById("reviewForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  if (!Auth.checkSession()) {
-    Swal.fire({
-      icon: "error",
-      title: "Akses Ditolak",
-      text: "Silakan login terlebih dahulu",
-      confirmButtonColor: "#2563eb",
-    });
-    return;
-  }
-
-  const text = document.getElementById("reviewText").value.trim();
-  const rating = selectedRating;
-
-  if (!text || rating === 0) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Harap isi review dan beri rating!",
-      confirmButtonColor: "#2563eb",
-    });
-    return;
-  }
-
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  const newReview = {
-    id: Date.now().toString(),
-    userId: user.email,
-    name: user.nickName || "Pelanggan",
-    text,
-    rating,
-    date: new Date().toISOString(),
-  };
-
-  const reviews = JSON.parse(localStorage.getItem("userReviews")) || [];
-  reviews.push(newReview);
-  localStorage.setItem("userReviews", JSON.stringify(reviews));
-
-  Swal.fire({
-    icon: "success",
-    title: "Sukses!",
-    text: "Review Anda telah diterima",
-    showConfirmButton: false,
-    timer: 1500,
-  }).then(() => {
-    window.location.reload();
-  });
-});
-
-// 6. Fungsi bantu
-function renderReviewActions(review) {
-  if (!Auth.checkSession()) return "";
-
-  const user = JSON.parse(localStorage.getItem("currentUser"));
-  if (user.email === review.userId) {
-    return `
-      <div class="review-actions">
-        <button class="btn btn-danger" onclick="deleteReview('${review.id}')">
-          Hapus
-        </button>
-      </div>
-    `;
-  }
-  return "";
-}
-
-// 7. Hapus review
-function deleteReview(reviewId) {
-  Swal.fire({
-    title: "Hapus Review?",
-    text: "Anda tidak dapat mengembalikan ini!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#64748b",
-    confirmButtonText: "Ya, hapus!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      let reviews = JSON.parse(localStorage.getItem("userReviews")) || [];
-      reviews = reviews.filter((r) => r.id !== reviewId);
-      localStorage.setItem("userReviews", JSON.stringify(reviews));
-
-      Swal.fire({
-        icon: "success",
-        title: "Dihapus!",
-        text: "Review telah dihapus",
-        timer: 1500,
-        showConfirmButton: false,
-      }).then(() => window.location.reload());
-    }
-  });
-}
-
-// Alias untuk deleteMyReview
-window.deleteMyReview = deleteReview;

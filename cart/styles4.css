@@ -302,6 +302,16 @@ header {
   background: #ffe6e6;
 }
 
+.history-btn {
+  padding: 8px 15px;
+  transition: all 0.3s ease;
+}
+
+.history-btn:hover {
+  background: #0a0a0a;
+  color: #fff;
+}
+
 /* Logged in state - Mobile */
 .mobile-user-icon.logged-in {
   position: relative;

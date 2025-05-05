@@ -1,0 +1,426 @@
+/* History Page Styles */
+.history-content {
+  padding: 100px 5% 50px;
+  background: #f8f9fa;
+  min-height: 70vh;
+}
+
+.history-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.history-container h2 {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 28px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+}
+
+/* Filter Section */
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.filter-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.filter-select {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.filter-btn:hover {
+  background-color: #333;
+}
+
+/* Empty State */
+.empty-history {
+  text-align: center;
+  padding: 40px 0;
+  display: none;
+}
+
+.empty-img {
+  width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.empty-history h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.empty-history p {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.shop-btn {
+  display: inline-block;
+  padding: 10px 25px;
+  background-color: #000;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.shop-btn:hover {
+  background-color: #333;
+}
+
+/* Order Card */
+.order-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: box-shadow 0.3s;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #eee;
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-id {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.order-date {
+  font-size: 14px;
+  color: #777;
+}
+
+.order-status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.order-status.processing {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.order-status.shipped {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.order-status.completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.order-status.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Order Items */
+.order-items {
+  padding: 15px 20px;
+}
+
+.order-item {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.order-item:last-child {
+  border-bottom: none;
+}
+
+.item-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
+.item-details {
+  flex-grow: 1;
+}
+
+.item-name {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.item-variant {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.item-price {
+  font-size: 14px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Order Footer */
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
+}
+
+.order-total {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-total span:first-child {
+  font-size: 14px;
+  color: #777;
+}
+
+.total-amount {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.order-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  padding: 8px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.detail-btn {
+  background-color: transparent;
+  border: 1px solid #000;
+  color: #000;
+}
+
+.detail-btn:hover {
+  background-color: #000;
+  color: white;
+}
+
+.buy-again-btn {
+  background-color: #000;
+  border: 1px solid #000;
+  color: white;
+}
+
+.buy-again-btn:hover {
+  background-color: #333;
+  border-color: #333;
+}
+
+/* Tambahkan atau perbaiki bagian ini */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 10px;
+  flex-wrap: wrap; /* Agar bisa wrapping di mobile */
+}
+
+.pagination button {
+  padding: 10px;
+  background: #000000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.page-btn {
+  padding: 8px 15px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: "Segoe UI", sans-serif;
+  font-weight: 500;
+}
+
+.page-btn:hover:not(.disabled) {
+  background-color: #000;
+  color: white;
+  border-color: #000;
+}
+
+.page-btn.disabled,
+.page-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 6px;
+}
+
+.page-number {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.page-number:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+.page-number.active {
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .order-footer {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .order-actions {
+    width: 100%;
+  }
+
+  .action-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .filter-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .order-status {
+    align-self: flex-start;
+  }
+
+  .order-item {
+    flex-direction: column;
+  }
+
+  .item-img {
+    margin-bottom: 10px;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+}
+
+/* Tombol dinamis */
+.complete-btn {
+  background-color: #28a745;
+  color: white;
+}
+.complete-btn:hover {
+  background-color: #218838;
+}
+
+.return-btn {
+  background-color: #ffc107;
+  color: #212529;
+}
+.return-btn:hover {
+  background-color: #e0a800;
+}
+
+.rate-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.rate-btn:hover {
+  background-color: #0056b3;
+}

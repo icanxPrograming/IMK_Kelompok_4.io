@@ -553,6 +553,9 @@ const Auth = {
         desktopTrigger.textContent = nickName;
         desktopDropdown.innerHTML = `
           <span class="logged-as">Hai, ${nickName}</span>
+          <a href="../history/historypage.html" class="history-btn">
+          Riwayat Pesanan
+          </a>
           <a href="#" class="logout-btn">Logout</a>
         `;
         if (cartCounter) {
@@ -575,6 +578,8 @@ const Auth = {
 
     // Mobile UI
     const mobileUserIcon = document.querySelector(".mobile-user-icon");
+    const bottomNavbar = document.querySelector(".bottom-navbar");
+
     if (mobileUserIcon) {
       if (currentUser) {
         const nickName = currentUser.nickName || "User";
@@ -586,10 +591,28 @@ const Auth = {
           e.preventDefault();
           showLogoutConfirmation();
         });
+
+        // Tambahkan tombol history di bottom navbar (jika belum ada)
+        if (!document.querySelector(".mobile-history-icon")) {
+          const historyLink = document.createElement("a");
+          historyLink.href = "../history/historypage.html";
+          historyLink.className = "mobile-history-icon";
+          historyLink.innerHTML = '<i class="bx bxs-receipt"></i>';
+          historyLink.title = "Riwayat Pesanan";
+          bottomNavbar.appendChild(historyLink);
+        }
       } else {
         mobileUserIcon.innerHTML = '<i class="bx bxs-user"></i>';
         mobileUserIcon.classList.remove("logged-in");
         mobileUserIcon.href = "../loginpage/loginpage.html";
+
+        // Hapus tombol history jika user tidak login
+        const existingHistoryIcon = document.querySelector(
+          ".mobile-history-icon"
+        );
+        if (existingHistoryIcon) {
+          existingHistoryIcon.remove();
+        }
       }
     }
 

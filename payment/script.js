@@ -140,6 +140,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1000);
   };
 
+  function calculateShippingCost(province) {
+    const lowerProvince = province.toLowerCase();
+    if (lowerProvince.includes("barat")) return 10000;
+    if (lowerProvince.includes("tengah") || lowerProvince.includes("timur"))
+      return 15000;
+    return 20000;
+  }
+
+  function calculateShippingDuration(province) {
+    const lowerProvince = province.toLowerCase();
+    if (lowerProvince.includes("barat")) return "2-3 hari";
+    if (lowerProvince.includes("tengah") || lowerProvince.includes("timur"))
+      return "3-4 hari";
+    return "4-5 hari";
+  }
+
+  function calculateEstimatedDelivery(province, orderTime) {
+    const baseDate = new Date(orderTime);
+    let daysToAdd = 0;
+
+    if (province.toLowerCase().includes("barat")) daysToAdd = 2;
+    else if (
+      province.toLowerCase().includes("tengah") ||
+      province.toLowerCase().includes("timur")
+    )
+      daysToAdd = 3;
+    else daysToAdd = 4;
+
+    // Tambahkan 1 hari ekstra untuk safety margin
+    daysToAdd += 1;
+
+    // Jika pesanan dibuat sebelum 16:00, tambahkan 0.5 hari
+    if (baseDate.getHours() < 16) daysToAdd -= 0.5;
+
+    baseDate.setDate(baseDate.getDate() + daysToAdd);
+    return baseDate;
+  }
+
   // WhatsApp konfirmasi (Versi tanpa backend)
   const setupWhatsAppButton = () => {
     document.getElementById("confirmBtn").addEventListener("click", () => {
@@ -151,10 +189,52 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmButtonText: "Ya, saya sudah bayar",
         cancelButtonText: "Belum",
       }).then((result) => {
+        // Di dalam fungsi setupWhatsAppButton
         if (result.isConfirmed) {
+          // 1. Buat data pesanan dengan status awal "processing"
+          const newOrder = {
+            id: `#NP${Date.now().toString().slice(-8)}`, // ID unik
+            date: new Date().toISOString(), // Format ISO 8601
+            status: "processing", // Status awal
+            items: paymentData.items.map((item) => ({
+              name: item.name,
+              variant: `Ukuran: ${item.size}`,
+              price: item.price,
+              qty: item.quantity,
+              image: item.image,
+            })),
+            buyer: {
+              name: `${paymentData.buyer.firstName} ${paymentData.buyer.lastName}`,
+              address: paymentData.buyer.address,
+              city: paymentData.buyer.city,
+              province: paymentData.buyer.province,
+              postalcode: paymentData.buyer.postalCode,
+              phone: paymentData.buyer.phone,
+            },
+            shipping: {
+              cost: calculateShippingCost(paymentData.buyer.province),
+              duration: calculateShippingDuration(paymentData.buyer.province),
+              estimatedDelivery: calculateEstimatedDelivery(
+                paymentData.buyer.province,
+                new Date()
+              ).toISOString(),
+            },
+            total:
+              typeof paymentData.total === "string"
+                ? parseInt(paymentData.total.replace(/[^\d]/g, ""))
+                : paymentData.total,
+          };
+
+          // 2. Simpan ke localStorage
+          const orders = JSON.parse(localStorage.getItem("orders")) || [];
+          orders.unshift(newOrder); // Tambahkan di awal array
+          localStorage.setItem("orders", JSON.stringify(orders));
+
+          // 3. Hapus keranjang
           localStorage.removeItem("cart");
           localStorage.removeItem("cart_note");
 
+          // 4. Redirect ke WhatsApp
           const now = new Date().toLocaleString("id-ID");
           const whatsappMessage = `Halo NEPTUNES Store, berikut detail pembayaran saya:
   
