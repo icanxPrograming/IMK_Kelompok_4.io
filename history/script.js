@@ -326,11 +326,17 @@ function initializeOrderHistory() {
             )
             .join("")}
         </div>
+        <!-- Tambahkan estimasi tiba -->
+        <div class="order-delivery">
+    <p><strong>Estimasi Tiba:</strong> <span>${formatDate(
+      order.shipping.estimatedDelivery
+    )}</span></p>
+  </div>
         <div class="order-footer">
           <div class="order-total">
             <span>Total Pesanan:</span>
             <span class="total-amount">Rp ${order.items
-              .reduce((sum, i) => sum + i.price * i.qty, 0)
+              .reduce((sum, item) => sum + item.price * item.qty, 0)
               .toLocaleString("id-ID")}</span>
           </div>
           <div class="order-actions">
@@ -434,8 +440,15 @@ function initializeOrderHistory() {
     const estimatedDelivery = new Date(order.shipping.estimatedDelivery);
     const canComplete = order.status === "shipped" && now >= estimatedDelivery;
     const canRate = order.status === "completed";
+    const canReturn = now >= estimatedDelivery;
 
     let buttons = "";
+
+    // Tombol Lihat Detail selalu ada jika ada pesanan
+    buttons += `<a href="../orderdetail/orderdetail.html?orderId=${encodeURIComponent(
+      order.id
+    )}" class="action-btn detail-btn">Lihat Detail</a>`;
+
     if (canComplete) {
       buttons += `<button class="action-btn complete-btn" data-order-id="${order.id}">Selesaikan Pesanan</button>`;
     }
@@ -444,6 +457,10 @@ function initializeOrderHistory() {
         order.id
       )}" class="rate-btn">Nilai Pesanan</a>`;
     }
+    if (canReturn) {
+      buttons += `<button class="action-btn return-btn">Ajukan Pengembalian</button>`;
+    }
+
     return buttons;
   }
 

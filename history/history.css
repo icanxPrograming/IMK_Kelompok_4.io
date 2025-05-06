@@ -299,6 +299,54 @@
   transition: all 0.3s ease;
 }
 
+.detail-btn {
+  background-color: transparent;
+  border: 1px solid #000;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.detail-btn:hover {
+  background-color: #000;
+  color: white;
+  border-color: #000;
+}
+
+.order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.order-actions .action-btn,
+.order-actions .rate-btn,
+.order-actions .return-btn,
+.order-actions .detail-btn {
+  width: 100%;
+  text-align: center;
+}
+
+.order-delivery {
+  padding: 10px 15px;
+  margin-top: 10px;
+  background-color: #f1f1f1;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.order-delivery strong {
+  display: inline-block;
+  width: 120px;
+  color: #000;
+}
+
+.order-delivery span {
+  font-weight: 500;
+  color: #007bff;
+}
+
 .page-btn {
   padding: 8px 15px;
   background-color: #f5f5f5;
